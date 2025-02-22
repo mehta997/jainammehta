@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +63,7 @@
         }
 
         .skill {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             padding: 1rem;
             text-align: center;
             border-radius: 5px;
@@ -74,7 +75,7 @@
         }
 
         .project {
-            background: rgba(255,255,255,0.05);
+            background: rgba(255, 255, 255, 0.05);
             padding: 1.5rem;
             border-radius: 8px;
         }
@@ -100,7 +101,7 @@
             color: var(--primary);
         }
 
-       .profile-photo {
+        .profile-photo {
             width: 150px;
             height: 150px;
             border-radius: 50%;
@@ -110,25 +111,40 @@
             display: block;
         }
 
+        .download-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--primary);
+            /* Use your theme color */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+
+        .download-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
             }
 
-           .profile-photo {
+            .profile-photo {
                 width: 120px;
                 height: 120px;
             }
         }
-      
     </style>
 </head>
+
 <body>
     <header>
         <div class="container">
-          <img src="https://media.licdn.com/dms/image/v2/D4D03AQFLZCuON6Fh3A/profile-displayphoto-shrink_200_200/B4DZTa5JDuHwAk-/0/1738839200854?e=1745452800&v=beta&t=9RvDSQU8TPMJr6MkJUi2EpvbyUwVnVJWMN9H5dUzJUk" 
-                 alt="Jainam Mehta" 
-                 class="profile-photo">
+            <img src="https://media.licdn.com/dms/image/v2/D4D03AQFLZCuON6Fh3A/profile-displayphoto-shrink_200_200/B4DZTa5JDuHwAk-/0/1738839200854?e=1745452800&v=beta&t=9RvDSQU8TPMJr6MkJUi2EpvbyUwVnVJWMN9H5dUzJUk"
+                alt="Jainam Mehta" class="profile-photo">
             <h1>Jainam Paresh Mehta</h1>
             <p class="tagline">Software Engineer | Tech Architect | Data Enthusiast</p>
         </div>
@@ -137,7 +153,9 @@
     <main class="container">
         <section id="about">
             <h2>About Me</h2>
-            <p>Experienced software engineer with over 6.5 years in building scalable and high-performance applications, primarily in the eCommerce domain. Passionate about full-stack development, data engineering, and AI-driven solutions.</p>
+            <p>Experienced software engineer with over 6.5 years in building scalable and high-performance applications,
+                primarily in the eCommerce domain. Passionate about full-stack development, data engineering, and
+                AI-driven solutions.</p>
         </section>
 
         <section id="skills">
@@ -165,22 +183,24 @@
             <div class="projects-grid">
                 <div class="project">
                     <h3>NFT Minting Platform</h3>
-                    <p>A secure and efficient NFT minting platform with IPFS-based metadata storage and unique assignment logic.</p>
+                    <p>A secure and efficient NFT minting platform with IPFS-based metadata storage and unique
+                        assignment logic.</p>
                 </div>
                 <div class="project">
                     <h3>AI-Powered Chatbot</h3>
-                    <p>Implemented an AI agent using Rasa for intelligent questionnaire handling and website integration.</p>
+                    <p>Implemented an AI agent using Rasa for intelligent questionnaire handling and website
+                        integration.</p>
                 </div>
             </div>
         </section>
-        
-<section id="resume">
-  <h2>Resume</h2>
-  <a href="=/Jainam.pdf" class="download-button" download>
-    Download Resume (PDF)
-  </a>
-</section>
-        
+
+        <section id="resume">
+            <h2>Resume</h2>
+            <a href="=/Jainam.pdf" class="download-button" download>
+                Download Resume (PDF)
+            </a>
+        </section>
+
         <section id="contact">
             <h2>Connect With Me</h2>
             <div class="social-links">
@@ -190,4 +210,5 @@
         </section>
     </main>
 </body>
+
 </html>
