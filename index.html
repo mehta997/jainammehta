@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jainam Paresh Mehta - Portfolio</title>
+    <style>
+        :root {
+            --primary: #2ecc71;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 0;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        section {
+            margin: 4rem 0;
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .projects-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .project {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .project h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .social-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+       .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1.5rem;
+            border: 3px solid var(--primary);
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+           .profile-photo {
+                width: 120px;
+                height: 120px;
+            }
+        }
+      
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+          <img src="https://media.licdn.com/dms/image/v2/D4D03AQFLZCuON6Fh3A/profile-displayphoto-shrink_200_200/B4DZTa5JDuHwAk-/0/1738839200854?e=1745452800&v=beta&t=9RvDSQU8TPMJr6MkJUi2EpvbyUwVnVJWMN9H5dUzJUk" 
+                 alt="Jainam Mehta" 
+                 class="profile-photo">
+            <h1>Jainam Paresh Mehta</h1>
+            <p class="tagline">Software Engineer | Tech Architect | Data Enthusiast</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Experienced software engineer with over 6.5 years in building scalable and high-performance applications, primarily in the eCommerce domain. Passionate about full-stack development, data engineering, and AI-driven solutions.</p>
+        </section>
+
+        <section id="skills">
+            <h2>Technical Arsenal</h2>
+            <div class="skills-grid">
+                <div class="skill">React.js</div>
+                <div class="skill">Next.js</div>
+                <div class="skill">Node.js</div>
+                <div class="skill">NestJS</div>
+                <div class="skill">Python</div>
+                <div class="skill">Java</div>
+                <div class="skill">GraphQL</div>
+                <div class="skill">gRPC</div>
+                <div class="skill">PostgreSQL</div>
+                <div class="skill">MongoDB</div>
+                <div class="skill">Machine Learning</div>
+                <div class="skill">Data Engineering</div>
+                <div class="skill">Open Policy Agent</div>
+                <div class="skill">NZT</div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Key Projects</h2>
+            <div class="projects-grid">
+                <div class="project">
+                    <h3>NFT Minting Platform</h3>
+                    <p>A secure and efficient NFT minting platform with IPFS-based metadata storage and unique assignment logic.</p>
+                </div>
+                <div class="project">
+                    <h3>AI-Powered Chatbot</h3>
+                    <p>Implemented an AI agent using Rasa for intelligent questionnaire handling and website integration.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Connect With Me</h2>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/jainam-mehta/" target="_blank">LinkedIn</a>
+                <a href="mailto:jainammehta100@yahoo.com">Email</a>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
