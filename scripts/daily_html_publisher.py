@@ -497,4 +497,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-    rebuild_home_latest(pathlib.Path(HOME_INDEX_PATH), blog_dir)
+    # rebuild_home_latest(pathlib.Path(HOME_INDEX_PATH), blog_dir)

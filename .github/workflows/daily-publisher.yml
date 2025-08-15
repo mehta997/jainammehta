@@ -26,12 +26,15 @@ jobs:
 
       - name: Generate article
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-4o-mini
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          PROVIDER: openrouter
+          OPENAI_MODEL: meta-llama/llama-3.1-8b-instruct:free
           SITE_URL: https://jainammehta.in
           BLOG_DIR: blog
           BLOG_INDEX: blog/index.html
-          TARGET_WORDS: "1200"
+          HOME_INDEX_PATH: index.html
+          SITEMAP_PATH: sitemap.xml
+          TARGET_WORDS: "900"   # slightly shorter = faster
         run: python scripts/daily_html_publisher.py
 
       - name: Commit & push
