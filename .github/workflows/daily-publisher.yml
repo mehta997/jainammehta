@@ -1,0 +1,48 @@
+name: Daily HTML Publisher
+
+on:
+  schedule:
+    - cron: "30 3 * * *" # 03:30 UTC = 09:00 IST daily
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+
+      - name: Generate article
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-4o-mini
+          SITE_URL: https://jainammehta.in
+          BLOG_DIR: blog
+          BLOG_INDEX: blog/index.html
+          TARGET_WORDS: "1200"
+        run: python scripts/daily_html_publisher.py
+
+      - name: Commit & push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(blog): auto-publish + sitemap"
+          commit_user_name: "Daily Bot"
+          commit_user_email: "bot@jainammehta.in"
+          file_pattern: |
+            index.html
+            blog/*.html
+            blog/styles.css
+            sitemap.xml
+            .post_memory.json
