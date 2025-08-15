@@ -1,21 +1,42 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Daily HTML Publisher
+- Generates a new blog post at /blog/<slug>.html
+- Updates /blog/index.html
+- Updates sitemap.xml
+- Updates homepage index.html "Latest from the Blog" list
+- Works with OpenAI or OpenRouter (free model), with graceful placeholder on failure
+
+Env (set via GitHub Actions step):
+  SITE_URL=https://jainammehta.in
+  BLOG_DIR=blog
+  BLOG_INDEX=blog/index.html
+  HOME_INDEX_PATH=index.html
+  SITEMAP_PATH=sitemap.xml
+  TARGET_WORDS=1000
+  # Provider keys:
+  OPENROUTER_API_KEY=...   (recommended; free model)
+  # Optional:
+  OPENAI_API_KEY=...       (if you also want OpenAI)
+  PROVIDER=openrouter      (force openrouter)
+  OPENAI_MODEL=meta-llama/llama-3.1-8b-instruct:free
+"""
+
 import os, json, pathlib, re, datetime, random, html
 from typing import List
 from slugify import slugify
 from tenacity import retry, stop_after_attempt, wait_exponential
-import glob
-
 
 # -------- Settings --------
-OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
 SITE_URL = os.getenv("SITE_URL", "https://jainammehta.in")
 BLOG_DIR = os.getenv("BLOG_DIR", "blog")
 BLOG_INDEX = os.getenv("BLOG_INDEX", f"{BLOG_DIR}/index.html")
-MEMORY_FILE = os.getenv("MEMORY_FILE", ".post_memory.json")
-SITEMAP_PATH = os.getenv("SITEMAP_PATH", "sitemap.xml")  # <- NEW
-MAX_TAGS = 8
-TARGET_WORDS = int(os.getenv("TARGET_WORDS", "1200"))
 HOME_INDEX_PATH = os.getenv("HOME_INDEX_PATH", "index.html")
+MEMORY_FILE = os.getenv("MEMORY_FILE", ".post_memory.json")
+SITEMAP_PATH = os.getenv("SITEMAP_PATH", "sitemap.xml")
+MAX_TAGS = 8
+TARGET_WORDS = int(os.getenv("TARGET_WORDS", "1000"))
 
 TOPIC_BUCKETS = [
     "AI agents & tool-use patterns",
@@ -28,9 +49,37 @@ TOPIC_BUCKETS = [
 
 BANNED_KEYWORDS = {"casino", "adult", "hate", "piracy"}
 
-# -------- OpenAI client --------
+# -------- Model provider (OpenAI ⇢ OpenRouter fallback) --------
 from openai import OpenAI
-client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+
+def make_client_and_model():
+    """
+    Returns (client, model_name, provider_name)
+    Prefers OpenRouter if PROVIDER=openrouter or if OPENAI_API_KEY is missing and OPENROUTER_API_KEY exists.
+    """
+    provider = os.getenv("PROVIDER", "").lower().strip()
+
+    if provider == "openrouter" or (not os.getenv("OPENAI_API_KEY") and os.getenv("OPENROUTER_API_KEY")):
+        client = OpenAI(
+            api_key=os.environ["OPENROUTER_API_KEY"],
+            base_url="https://openrouter.ai/api/v1",
+            default_headers={
+                # Optional: helps OpenRouter with analytics/fairness
+                "HTTP-Referer": os.getenv("PUBLIC_SITE_URL", "https://github.com/mehta997/jainammehta"),
+                "X-Title": "Daily HTML Publisher",
+            },
+        )
+        # Pin a free model by default
+        model = os.getenv("OPENAI_MODEL", "meta-llama/llama-3.1-8b-instruct:free")
+        return client, model, "openrouter"
+
+    # Default to OpenAI
+    client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+    model = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+    return client, model, "openai"
+
+client, OPENAI_MODEL, PROVIDER_IN_USE = make_client_and_model()
+print(f"[info] Provider: {PROVIDER_IN_USE}, Model: {OPENAI_MODEL}")
 
 SYSTEM = """You are a precise senior technical writer.
 Write an original, accurate longform technical article with headings, code examples, steps, pitfalls, and a short TL;DR.
@@ -71,9 +120,15 @@ def ensure_unique_slug(base: str, blog_dir: pathlib.Path) -> str:
         i += 1
     return f"{s}-{i}"
 
+# ---- Robust generator (handles OpenRouter JSON quirks + OpenAI fallback) ----
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=2, max=10))
 def generate_article(topic: str) -> dict:
-    """Returns dict: {title, slug, description, tags[], html_body}"""
+    """
+    Returns dict: {title, slug, description, tags[], html_body}
+    - Tries chosen provider/model; if json_object unsupported, retries w/o response_format and parses JSON.
+    - If provider==OpenAI fails and OPENROUTER_API_KEY exists, fallback to OpenRouter automatically.
+    """
+    system = SYSTEM
     user = f"""
 Topic: {topic}
 
@@ -89,15 +144,57 @@ Return JSON with:
 Target length: ~{TARGET_WORDS} words.
 NO markdown, return pure HTML in html_body.
 """
-    resp = client.chat.completions.create(
-        model=OPENAI_MODEL,
-        temperature=0.6,
-        response_format={"type": "json_object"},
-        messages=[{"role": "system", "content": SYSTEM},
-                  {"role": "user", "content": user}]
-    )
-    data = json.loads(resp.choices[0].message.content)
+    def _call(_client, _model, use_json_format=True):
+        kwargs = {
+            "model": _model,
+            "temperature": 0.6,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+        }
+        if use_json_format:
+            kwargs["response_format"] = {"type": "json_object"}
+        return _client.chat.completions.create(**kwargs)
 
+    import json as _json, re as _re
+    global client, OPENAI_MODEL, PROVIDER_IN_USE
+
+    # 1) Current provider attempt
+    try:
+        resp = _call(client, OPENAI_MODEL, use_json_format=True)
+        data = _json.loads(resp.choices[0].message.content)
+    except Exception:
+        # Retry w/o response_format; parse JSON manually
+        try:
+            resp = _call(client, OPENAI_MODEL, use_json_format=False)
+            raw = resp.choices[0].message.content
+            m = _re.search(r"\{.*\}", raw, flags=_re.DOTALL)
+            if not m:
+                raise RuntimeError("Model did not return JSON when requested.")
+            data = _json.loads(m.group(0))
+        except Exception:
+            # Fallback: if using OpenAI and OpenRouter is available, switch once
+            if PROVIDER_IN_USE == "openai" and os.getenv("OPENROUTER_API_KEY"):
+                print("[warn] OpenAI failed, falling back to OpenRouter…")
+                os.environ["PROVIDER"] = "openrouter"
+                new_client, new_model, new_provider = make_client_and_model()
+                client, OPENAI_MODEL, PROVIDER_IN_USE = new_client, new_model, new_provider
+                # Try OpenRouter with JSON format, then non-JSON
+                try:
+                    resp = _call(client, OPENAI_MODEL, use_json_format=True)
+                    data = _json.loads(resp.choices[0].message.content)
+                except Exception:
+                    resp = _call(client, OPENAI_MODEL, use_json_format=False)
+                    raw = resp.choices[0].message.content
+                    m = _re.search(r"\{.*\}", raw, flags=_re.DOTALL)
+                    if not m:
+                        raise
+                    data = _json.loads(m.group(0))
+            else:
+                raise  # bubble up; tenacity will retry
+
+    # normalize
     data["title"] = data.get("title", "").strip()
     data["slug"] = slugify(data.get("slug") or data["title"])
     data["description"] = (data.get("description") or "").strip()[:150]
@@ -225,22 +322,12 @@ hr{border:none;border-top:1px solid #eee;margin:24px 0}
 ul#posts{list-style:disc}
 """, encoding="utf-8")
 
-# ----------------- SITEMAP SUPPORT (NEW) -----------------
 def today_iso():
     # YYYY-MM-DD in IST
     ist = datetime.datetime.utcnow() + datetime.timedelta(hours=5, minutes=30)
     return ist.date().isoformat()
 
 def update_sitemap(sitemap_path: pathlib.Path, site_url: str, slug: str):
-    """
-    Ensure sitemap.xml exists and contains:
-      <url>
-        <loc>https://jainammehta.in/blog/<slug>.html</loc>
-        <lastmod>YYYY-MM-DD</lastmod>
-        <priority>0.7</priority>
-      </url>
-    If it exists, update <lastmod> if the entry is already there; otherwise append.
-    """
     import xml.etree.ElementTree as ET
     from xml.dom import minidom
 
@@ -260,19 +347,18 @@ def update_sitemap(sitemap_path: pathlib.Path, site_url: str, slug: str):
             tree = ET.parse(sitemap_path)
             root = tree.getroot()
         except ET.ParseError:
-            # Recreate if malformed
             root = ET.Element(urlset_tag)
             tree = ET.ElementTree(root)
     else:
         root = ET.Element(urlset_tag)
         tree = ET.ElementTree(root)
-        # Seed with homepage if empty
+        # seed homepage if empty
         home_url = ET.SubElement(root, url_tag)
         ET.SubElement(home_url, loc_tag).text = site_url.rstrip("/") + "/"
         ET.SubElement(home_url, lastmod_tag).text = lastmod_value
         ET.SubElement(home_url, priority_tag).text = "1.0"
 
-    # Look for existing entry
+    # find existing entry
     found = None
     for u in root.findall(f".//{url_tag}"):
         loc_el = u.find(loc_tag)
@@ -281,31 +367,78 @@ def update_sitemap(sitemap_path: pathlib.Path, site_url: str, slug: str):
             break
 
     if found is None:
-        # Append new entry
         u = ET.SubElement(root, url_tag)
         ET.SubElement(u, loc_tag).text = loc_value
         ET.SubElement(u, lastmod_tag).text = lastmod_value
         ET.SubElement(u, priority_tag).text = "0.7"
     else:
-        # Update lastmod
         lm = found.find(lastmod_tag)
         if lm is None:
             lm = ET.SubElement(found, lastmod_tag)
         lm.text = lastmod_value
 
-    # Pretty print
     rough = ET.tostring(root, encoding="utf-8")
     pretty = minidom.parseString(rough).toprettyxml(indent="  ", encoding="utf-8")
     sitemap_path.write_bytes(pretty)
 
-# --------------------------------------------------------
+def rebuild_home_latest(home_index_path: pathlib.Path, blog_dir: pathlib.Path, max_items: int = 5):
+    """
+    Rebuilds the list between <!-- LATEST_POSTS_START --> and <!-- LATEST_POSTS_END -->
+    using the most recent blog/*.html files (by mtime).
+    """
+    if not home_index_path.exists():
+        return
+    posts = []
+    for p in sorted(blog_dir.glob("*.html"), key=lambda x: x.stat().st_mtime, reverse=True):
+        if p.name in ("index.html", "styles.css"):
+            continue
+        try:
+            html_text = p.read_text(encoding="utf-8", errors="ignore")
+            m = re.search(r"<title>(.*?)</title>", html_text, flags=re.IGNORECASE | re.DOTALL)
+            title = m.group(1).replace(" • Jainam Mehta", "").strip() if m else p.stem
+            posts.append((p.stem, title))
+        except Exception:
+            posts.append((p.stem, p.stem))
+        if len(posts) >= max_items:
+            break
 
+    li_html = "\n          " + "\n          ".join(
+        f'<li><a href="/blog/{slug}.html">{html.escape(title)}</a></li>' for slug, title in posts
+    ) + "\n        "
+
+    home_html = home_index_path.read_text(encoding="utf-8")
+    start_marker = "<!-- LATEST_POSTS_START -->"
+    end_marker = "<!-- LATEST_POSTS_END -->"
+    if start_marker in home_html and end_marker in home_html:
+        pattern = re.compile(rf"{re.escape(start_marker)}.*?{re.escape(end_marker)}", re.DOTALL)
+        replacement = f"{start_marker}{li_html}{end_marker}"
+        updated = pattern.sub(replacement, home_html, count=1)
+        home_index_path.write_text(updated, encoding="utf-8")
+
+# -------- Graceful placeholder if LLM fails --------
+def write_placeholder(blog_dir: pathlib.Path, title="Publishing temporarily unavailable"):
+    slug = ensure_unique_slug("publishing-temporarily-unavailable", blog_dir)
+    html_body = f"""
+<p><strong>TL;DR:</strong> Automated publishing could not reach the model provider today.</p>
+<p>This is a placeholder post generated at {datetime.datetime.utcnow().isoformat()}Z. The job will retry tomorrow.</p>
+<h2>What happened?</h2>
+<p>Likely API key/billing/unavailability. Check GitHub Action logs for details.</p>
+<ul><li>OpenAI or OpenRouter outage</li><li>Missing/invalid API key</li><li>Model access not enabled</li></ul>
+<h2>Key Takeaways</h2>
+<ul><li>System is healthy; only the LLM call failed.</li><li>Daily job will keep running.</li></ul>
+"""
+    page_html = render_page(SITE_URL, slug, title, "Automated publishing is temporarily unavailable.", [], html_body)
+    (blog_dir / f"{slug}.html").write_text(page_html, encoding="utf-8")
+    return slug, title
+
+# ----------------- MAIN -----------------
 def main():
     blog_dir = pathlib.Path(BLOG_DIR)
     blog_dir.mkdir(parents=True, exist_ok=True)
     index_path = pathlib.Path(BLOG_INDEX)
     styles_path = blog_dir / "styles.css"
     sitemap_path = pathlib.Path(SITEMAP_PATH)
+    home_index_path = pathlib.Path(HOME_INDEX_PATH)
 
     ensure_blog_index(index_path)
     ensure_styles(styles_path)
@@ -313,9 +446,27 @@ def main():
     mem = load_memory()
     topic = pick_topic()
     if blocked(topic):
-        raise SystemExit(f"Blocked topic: {topic}")
+        print(f"[info] Blocked topic skipped: {topic}")
+        topic = "AI agents & tool-use patterns: hands-on tutorial"
 
-    data = generate_article(topic)
+    # Try to generate article; on failure, publish placeholder (workflow still succeeds)
+    try:
+        data = generate_article(topic)
+    except Exception as e:
+        print(f"[warn] LLM generation failed: {e}")
+        slug, title = write_placeholder(blog_dir)
+        prepend_link_to_index(index_path, slug, title)
+        update_sitemap(sitemap_path, SITE_URL, slug)
+        rebuild_home_latest(home_index_path, blog_dir)
+        # memory
+        today = datetime.date.today().isoformat()
+        mem.setdefault("published", {})
+        mem["published"].setdefault(today, [])
+        mem["published"][today].append(slug)
+        save_memory(mem)
+        print("Published placeholder due to LLM failure.")
+        return
+
     base_slug = data["slug"] or slugify(data["title"])
     final_slug = ensure_unique_slug(base_slug, blog_dir)
 
@@ -330,11 +481,10 @@ def main():
     )
     (blog_dir / f"{final_slug}.html").write_text(page_html, encoding="utf-8")
 
-    # update blog index
+    # update blog index & sitemap & homepage
     prepend_link_to_index(index_path, final_slug, data["title"])
-
-    # update sitemap.xml (NEW)
     update_sitemap(sitemap_path, SITE_URL, final_slug)
+    rebuild_home_latest(home_index_path, blog_dir)
 
     # memory
     today = datetime.date.today().isoformat()
@@ -343,7 +493,7 @@ def main():
     mem["published"][today].append(final_slug)
     save_memory(mem)
 
-    print(f"Published: /blog/{final_slug}.html and updated sitemap.xml")
+    print(f"Published: /blog/{final_slug}.html (provider={PROVIDER_IN_USE}, model={OPENAI_MODEL})")
 
 if __name__ == "__main__":
     main()
