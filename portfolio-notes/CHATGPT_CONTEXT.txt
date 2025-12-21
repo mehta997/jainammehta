@@ -1,0 +1,14 @@
+Goal:
+Personal software engineer portfolio (boss-safe)
+
+Key decisions:
+- Removed “freelance” keyword
+- Services focus on build, revamp, maintenance, migration
+- Experience is project-based
+- Strong SEO, favicon added
+- Dark glass UI completed
+
+Next possible tasks:
+- Ranking strategy
+- Blog setup
+- Case study pages
