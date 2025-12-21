@@ -3,389 +3,490 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jainam Paresh Mehta — Freelance Software Engineer</title>
+
+    <title>Jainam Paresh Mehta — Software Engineer</title>
 
     <!-- SEO -->
     <meta
       name="description"
-      content="Freelance Software Engineer specialized in Next.js, NestJS, AI Agents, and scalable systems. Available for projects and consulting."
+      content="Software Engineer specialized in web apps, AI agents, and scalable backend systems."
     />
-    <meta
-      property="og:title"
-      content="Jainam Paresh Mehta — Freelance Software Engineer"
-    />
-    <meta
-      property="og:description"
-      content="I build high-quality web apps, GraphQL/gRPC backends, AI agents, and data pipelines."
-    />
-    <meta
-      property="og:image"
-      content="https://jainammehta.in/profile-photo.jpeg"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://jainammehta.in/" />
 
-    <!-- Ads/Tracking (kept from your page) -->
-    <script
-      async
-      custom-element="amp-auto-ads"
-      src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"
-    ></script>
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5140839488088296"
-      crossorigin="anonymous"
-    ></script>
-    <!-- Google Tag Manager -->
-    <script>
-      (function (w, d, s, l, i) {
-        w[l] = w[l] || [];
-        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-        var f = d.getElementsByTagName(s)[0],
-          j = d.createElement(s),
-          dl = l != "dataLayer" ? "&l=" + l : "";
-        j.async = true;
-        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-        f.parentNode.insertBefore(j, f);
-      })(window, document, "script", "dataLayer", "GTM-KQJX7CL4");
-    </script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Styles -->
-    <style>
-      :root {
-        --bg: #0d1117;
-        --card: #0f1623;
-        --muted: #9aa4b2;
-        --text: #e6edf3;
-        --brand: #2ecc71;
-        --brand2: #06b6d4;
-        --ring: rgba(46, 204, 113, 0.25);
-      }
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        background: linear-gradient(120deg, #0d1117 0%, #0b1020 100%);
-        color: var(--text);
-        font-family: Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif;
-        line-height: 1.6;
-      }
-      a {
-        color: var(--brand);
-        text-decoration: none;
-      }
-      .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 24px;
-      }
-      header {
-        position: sticky;
-        top: 0;
-        background: rgba(13, 17, 23, 0.7);
-        backdrop-filter: blur(8px);
-        border-bottom: 1px solid #1f2937;
-        z-index: 20;
-      }
-      nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
-      nav .links {
-        display: flex;
-        gap: 18px;
-      }
-      nav a:hover {
-        opacity: 0.9;
-      }
-      .btn {
-        display: inline-block;
-        padding: 12px 18px;
-        border-radius: 10px;
-        background: var(--brand);
-        color: #04110a;
-        font-weight: 600;
-      }
-      .btn.secondary {
-        background: #111827;
-        border: 1px solid #243245;
-        color: #e6edf3;
-      }
-      .hero {
-        padding: 54px 0 32px;
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
-        gap: 28px;
-        align-items: center;
-      }
-      .hero .title {
-        font-size: 40px;
-        line-height: 1.2;
-        margin-bottom: 10px;
-      }
-      .hero .subtitle {
-        color: var(--muted);
-        margin-bottom: 18px;
-      }
-      .hero .cta {
-        display: flex;
-        gap: 12px;
-        margin-top: 10px;
-        flex-wrap: wrap;
-      }
-      .card {
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.04),
-          rgba(255, 255, 255, 0.02)
-        );
-        border: 1px solid #1f2937;
-        border-radius: 18px;
-        padding: 20px;
-      }
-      .grid {
-        display: grid;
-        gap: 16px;
-      }
-      .grid-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-      .grid-2 {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-      .tag {
-        display: inline-block;
-        font-size: 12px;
-        color: #cbd5e1;
-        background: #111827;
-        border: 1px solid #243245;
-        padding: 4px 10px;
-        border-radius: 999px;
-        margin: 4px 6px 0 0;
-      }
-      h2 {
-        font-size: 24px;
-        margin: 24px 0 12px;
-      }
-      .project h3 {
-        margin-bottom: 6px;
-      }
-      .muted {
-        color: var(--muted);
-      }
-      footer {
-        padding: 28px 0;
-        color: #94a3b8;
-      }
-      .avatar {
-        width: 140px;
-        height: 140px;
-        border-radius: 999px;
-        border: 3px solid var(--brand);
-        object-fit: cover;
-        box-shadow: 0 0 0 6px var(--ring);
-      }
-      @media (max-width: 900px) {
-        .hero {
-          grid-template-columns: 1fr;
-        }
-      }
-    </style>
-
-    <!-- Schema.org -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Jainam Paresh Mehta",
-        "url": "https://jainammehta.in/",
-        "jobTitle": "Freelance Software Engineer",
-        "sameAs": ["https://www.linkedin.com/in/jainam-mehta/"],
-        "image": "https://jainammehta.in/profile-photo.jpeg"
-      }
-    </script>
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <!-- GTM (noscript) -->
-    <noscript
-      ><iframe
-        src="https://www.googletagmanager.com/ns.html?id=GTM-KQJX7CL4"
-        height="0"
-        width="0"
-        style="display: none; visibility: hidden"
-      ></iframe
-    ></noscript>
 
-    <header>
-      <div class="container">
-        <nav>
-          <div><strong>JM</strong></div>
-          <div class="links">
-            <a href="/#services">Services</a>
-            <a href="/#work">Work</a>
-            <a href="/blog/">Blog</a>
-            <a href="/resume/Jainam-Mehta-Resume.pdf" target="_blank">Resume</a>
-            <a
-              class="btn"
-              href="mailto:hello@jainammehta.in?subject=Project%20Inquiry"
-              >Hire me</a
-            >
-          </div>
+  <body>
+    <!-- HEADER -->
+    <header class="header">
+      <div class="container nav">
+        <div class="logo">JM</div>
+        <nav class="nav-links">
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#projects">Work</a>
+          <a href="#faq">FAQs</a>
+          <a href="#contact" class="btn primary">Hire me</a>
         </nav>
       </div>
     </header>
 
     <main class="container">
-      <!-- Hero -->
-      <section class="hero card">
-        <div>
-          <h1 class="title">
-            I build fast, reliable products —
-            <span style="color: var(--brand)">web apps</span>,
-            <span style="color: var(--brand2)">AI agents</span>, and scalable
-            backends.
+      <!-- HERO -->
+      <section class="hero hero-glass">
+        <div class="hero-content">
+          <h1>
+            Building reliable digital products —
+            <span class="accent">from idea to production scale.</span>
           </h1>
-          <p class="subtitle">
-            Freelance Software Engineer (Next.js, NestJS, GraphQL/gRPC, Rust,
-            DynamoDB/Postgres). I help startups ship production-grade systems
-            quickly.
+
+          <p class="hero-subtitle">
+            Software Engineer with 7.5+ years of experience building
+            web apps, AI agents, and scalable backend systems for startups and
+            growing businesses.
           </p>
-          <div>
-            <span class="tag">Next.js</span><span class="tag">NestJS</span
-            ><span class="tag">GraphQL</span><span class="tag">gRPC</span
-            ><span class="tag">AI Agents</span><span class="tag">DynamoDB</span
-            ><span class="tag">PostgreSQL</span>
+
+          <div class="hero-tags">
+            <span class="tag">Next.js</span>
+            <span class="tag">NestJS</span>
+            <span class="tag">REST</span>
+            <span class="tag">GraphQL</span>
+            <span class="tag">AI Agents</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">AWS</span>
+            <span class="tag">Shopify</span>
           </div>
-          <div class="cta">
-            <a
-              class="btn"
-              href="mailto:hello@jainammehta.in?subject=Build%20an%20MVP"
-              >Start a project</a
-            >
-            <a class="btn secondary" href="/blog/">Read my blog</a>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">Start a project</a>
+            <a class="btn secondary" href="#projects">View work</a>
           </div>
         </div>
-        <div style="display: flex; justify-content: center">
-          <img
-            class="avatar"
-            src="https://media.licdn.com/dms/image/v2/D4D03AQFLZCuON6Fh3A/profile-displayphoto-shrink_200_200/B4DZTa5JDuHwAk-/0/1738839200854?e=2147483647&v=beta&t=fY2zQwspDlOLlKlt_UuWyA4KQtPSBDWWYKoRGQ3ADUg"
-            alt="Jainam Mehta"
-          />
+
+        <div class="hero-visual">
+          <div class="avatar-ring">
+            <img
+              src="https://media.licdn.com/dms/image/v2/D4D03AQFLZCuON6Fh3A/profile-displayphoto-shrink_200_200/B4DZTa5JDuHwAk-/0/1738839200854?e=2147483647&v=beta&t=fY2zQwspDlOLlKlt_UuWyA4KQtPSBDWWYKoRGQ3ADUg"
+              alt="Jainam Mehta"
+            />
+          </div>
         </div>
       </section>
 
-      <!-- Services -->
+      <!-- SERVICES -->
       <section id="services">
-        <h2>Services</h2>
+        <h2>How I Can Help</h2>
+        <p class="muted" style="margin-bottom: 28px">
+          Senior engineering support across the full software lifecycle — from
+          new builds to fixing, scaling, and modernizing existing systems.
+        </p>
+
         <div class="grid grid-3">
+          <!-- 1 -->
           <div class="card">
-            <h3>Web Apps</h3>
+            <h3>Product Engineering</h3>
             <p class="muted">
-              Next.js frontends with clean UX, authentication, and high
-              Lighthouse scores.
+              Design and development of production-ready applications from
+              scratch. I handle architecture, implementation, and delivery for
+              MVPs and large-scale platforms.
             </p>
           </div>
+
+          <!-- 2 -->
           <div class="card">
-            <h3>AI Agents</h3>
+            <h3>Web & Platform Development</h3>
             <p class="muted">
-              Task-oriented agents (content, automation, RAG) with observability
-              and guardrails.
+              High-performance web platforms with clean UX, secure
+              authentication, and scalable frontend-backend integration.
             </p>
           </div>
+
+          <!-- 3 -->
           <div class="card">
-            <h3>APIs & Backends</h3>
+            <h3>APIs & Backend Systems</h3>
             <p class="muted">
-              NestJS/GraphQL/gRPC services, queues, caching, and production
-              hardening.
+              Robust backend systems including REST, GraphQL, microservices, and
+              event-driven architectures built for scale and reliability.
+            </p>
+          </div>
+
+          <!-- 4 -->
+          <div class="card">
+            <h3>AI Agents & Automation</h3>
+            <p class="muted">
+              Task-oriented AI agents, RAG-based systems, and intelligent
+              automation to reduce manual work and improve operational
+              efficiency.
+            </p>
+          </div>
+
+          <!-- 5 -->
+          <div class="card">
+            <h3>System Revamp & Optimization</h3>
+            <p class="muted">
+              Improving slow, unstable, or poorly designed systems. Includes
+              refactoring, performance tuning, database optimization, and
+              architectural cleanup.
+            </p>
+          </div>
+
+          <!-- 6 -->
+          <div class="card">
+            <h3>Maintenance & Long-Term Support</h3>
+            <p class="muted">
+              Ongoing maintenance, feature enhancements, bug fixes, and
+              monitoring for production systems that need consistent, reliable
+              support.
+            </p>
+          </div>
+
+          <!-- 7 -->
+          <div class="card">
+            <h3>Technology Migration</h3>
+            <p class="muted">
+              Migrate applications from any technology to modern stacks —
+              frontend, backend, databases, or infrastructure — with minimal
+              downtime and no data loss.
+            </p>
+          </div>
+
+          <!-- 8 -->
+          <div class="card">
+            <h3>Legacy System Modernization</h3>
+            <p class="muted">
+              Modernizing legacy codebases into maintainable, scalable systems
+              while preserving business logic and critical data.
+            </p>
+          </div>
+
+          <!-- 9 -->
+          <div class="card">
+            <h3>Rescue & High-Risk Projects</h3>
+            <p class="muted">
+              Stepping in when projects are stuck or failing. I diagnose issues,
+              stabilize production, and get systems back on track under tight
+              timelines.
             </p>
           </div>
         </div>
       </section>
 
-      <!-- Work -->
-      <section id="work">
-        <h2>Selected Work</h2>
-        <div class="grid grid-2">
-          <div class="card project">
-            <h3>NFT Minting Platform</h3>
-            <p class="muted">
-              Secure minting with IPFS metadata & unique assignment logic.
-            </p>
-          </div>
-          <div class="card project">
-            <h3>AI Knowledge Assistant</h3>
-            <p class="muted">
-              RAG agent with tool-use and admin dashboard for data curation.
-            </p>
-          </div>
-        </div>
-      </section>
+      <section id="about" class="section">
+        <h2>About Me</h2>
 
-      <!-- Latest from the blog (auto-filled by agent) -->
-      <section id="latest">
-        <h2>Latest from the Blog</h2>
-        <div class="card">
-          <ul id="latest-posts">
-            <!-- LATEST_POSTS_START -->
-          <li><a href="/blog/publishing-temporarily-unavailable.html">Publishing temporarily unavailable</a></li>
-        <!-- LATEST_POSTS_END -->
-          </ul>
-          <p style="margin-top: 10px"><a href="/blog/">See all posts →</a></p>
-        </div>
-      </section>
-
-      <!-- Contact -->
-      <section id="contact">
-        <h2>Let’s build something</h2>
         <div class="card">
           <p class="muted">
-            Tell me about your project and timeline. I usually reply within 24
+            I’m Jainam Mehta, a Software Engineer with 7.5+ years of
+            experience building production-grade digital products.
+          </p>
+
+          <p class="muted">
+            I’ve worked across ecommerce, Web3, AI, and backend-heavy platforms
+            — helping startups move from idea to scalable production systems. My
+            focus is on clean architecture, reliability, and long-term
+            maintainability.
+          </p>
+
+          <p class="muted">
+            I enjoy working closely with founders and teams, taking ownership of
+            technical decisions, and shipping software that actually delivers
+            business value.
+          </p>
+        </div>
+      </section>
+
+      <!-- EXPERIENCE -->
+      <section id="projects">
+        <h2>Project Experience</h2>
+        <p class="muted" style="margin-bottom: 24px">
+          Large-scale systems and platforms I’ve architected, built, and
+          optimized.
+        </p>
+
+        <div class="timeline">
+          <!-- Project 1 -->
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>All-in-One Enterprise Platform</h3>
+              <p class="muted">
+                Finance · Ecommerce · CRM · Healthcare · Media · Wallet
+                Management
+              </p>
+              <p>
+                Designed and built a large-scale, all-in-one enterprise platform
+                covering finance, ecommerce (B2B, B2C, B2B2C), CRM, media
+                management, healthcare modules, and wallet management. The
+                system was built using a microservice architecture with secure
+                data handling and high scalability. Implemented a custom-built
+                Vault system for secrets and credential management and developed
+                multi-portal Angular applications for different user roles.
+              </p>
+              <div class="tags">
+                <span class="tag">Spring Boot</span>
+                <span class="tag">Angular</span>
+                <span class="tag">Microservices</span>
+                <span class="tag">MongoDB</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Redis</span>
+                <span class="tag">Elasticsearch</span>
+                <span class="tag">Custom Vault</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>US Stock Market Prediction & Analysis Platform</h3>
+              <p class="muted">High-performance data processing system</p>
+              <p>
+                Revamped a US stock market prediction and analysis platform
+                built with Node.js and React. Optimized the core prediction
+                algorithm, reducing execution time from approximately
+                <strong>3 hours to under 10 minutes</strong>. Achieved this
+                through parallel processing, multi-threading strategies,
+                optimized database queries, and improved error handling across
+                the data pipeline.
+              </p>
+              <div class="tags">
+                <span class="tag">Node.js</span>
+                <span class="tag">React</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Parallel Processing</span>
+                <span class="tag">Multi-threading</span>
+                <span class="tag">Performance Optimization</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>Ecommerce Platforms (B2B, B2C, B2B2C)</h3>
+              <p class="muted">Large-scale commerce systems</p>
+              <p>
+                Architected and delivered multi-tenant ecommerce platforms
+                supporting B2B, B2C, and hybrid B2B2C models. Implemented admin
+                portals, order management, integrations, and scalable
+                microservice backends.
+              </p>
+              <div class="tags">
+                <span class="tag">NestJS</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">React</span>
+                <span class="tag">PostgreSQL</span>
+                <span class="tag">Microservices</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 3 -->
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>CRM & Internal Business Portals</h3>
+              <p class="muted">Operational tools & dashboards</p>
+              <p>
+                Developed custom CRM portals and internal systems for managing
+                users, leads, workflows, and reporting. Emphasized role-based
+                access, clean UX, and performance optimization.
+              </p>
+              <div class="tags">
+                <span class="tag">React</span>
+                <span class="tag">Node.js</span>
+                <span class="tag">REST APIs</span>
+                <span class="tag">PostgreSQL</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 4 -->
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>Blockchain & NFT Minting Platforms</h3>
+              <p class="muted">Web3 applications</p>
+              <p>
+                Built NFT minting platforms with smart contracts, IPFS-based
+                metadata storage, and optimized minting flows. Focused on
+                security, gas optimization, and smooth user experience.
+              </p>
+              <div class="tags">
+                <span class="tag">Solana</span>
+                <span class="tag">Rust</span>
+                <span class="tag">Web3</span>
+                <span class="tag">IPFS</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 5 -->
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>Gaming Platforms & Tournament Systems</h3>
+              <p class="muted">Web3-enabled, real-time competitive systems</p>
+              <p>
+                Built a high-performance gaming platform for hosting
+                tournaments, challenges, and automated prize pool distribution.
+                Architected the backend using Rust-based microservices for
+                speed, safety, and scalability. Implemented real-time game
+                interactions and Web3 integrations, with a modern frontend for
+                player onboarding, tournaments, and leaderboard management.
+              </p>
+              <div class="tags">
+                <span class="tag">Rust</span>
+                <span class="tag">Microservices</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">Web3</span>
+                <span class="tag">Real-time Systems</span>
+                <span class="tag">Prize Pool Distribution</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project 6 -->
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>AI Chatbots & RAG Systems</h3>
+              <p class="muted">AI-powered automation</p>
+              <p>
+                Designed and implemented AI chatbots ranging from rule-based
+                systems to RAG-powered assistants for customer support,
+                knowledge retrieval, and internal automation.
+              </p>
+              <div class="tags">
+                <span class="tag">RAG</span>
+                <span class="tag">Rasa</span>
+                <span class="tag">Botkit</span>
+                <span class="tag">Python</span>
+                <span class="tag">Vector DB</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>Ecommerce Platforms & Online Stores</h3>
+              <p class="muted">B2B · B2C · B2B2C · Shopify</p>
+              <p>
+                Designed and delivered multiple ecommerce platforms.
+                Shopify-based online stores. Worked on product-based businesses
+                selling hoodies, t-shirts, shirts, skincare products, and
+                fashion apparel. Implemented product catalogs, secure checkout
+                flows, payment integrations, order management, and admin
+                dashboards with a focus on performance, scalability, and
+                conversion optimization.
+              </p>
+              <div class="tags">
+                <span class="tag">Shopify</span>
+                <span class="tag">Payments</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="dot"></div>
+            <div class="card">
+              <h3>GST Compliance & Filing Automation System</h3>
+              <p class="muted">
+                India-based CA firm · Financial compliance platform
+              </p>
+              <p>
+                Built an end-to-end GST automation platform for an India-based
+                Chartered Accountant firm to generate GST files as per the
+                latest government rules. The system automated data ingestion,
+                validation, reconciliation, and GST return generation (GSTR
+                formats), significantly reducing manual effort and errors.
+                Implemented rule-based validations to adapt to frequent GST
+                regulation updates and provided dashboards for CAs to manage
+                multiple clients efficiently.
+              </p>
+              <div class="tags">
+                <span class="tag">Node.js</span>
+                <span class="tag">React</span>
+                <span class="tag">MongoDB</span>
+                <span class="tag">GST Rules Engine</span>
+                <span class="tag">Data Validation</span>
+                <span class="tag">Financial Compliance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq" class="section">
+        <h2>Frequently Asked Questions</h2>
+
+        <details class="card">
+          <summary>What services do you offer?</summary>
+          <p>
+            Full-stack web development, AI agents, backend systems, ecommerce
+            platforms, and Web3 applications.
+          </p>
+        </details>
+
+        <details class="card">
+          <summary>How much experience do you have?</summary>
+          <p>
+            I have 7.5+ years of professional experience working with startups,
+            agencies, and product teams.
+          </p>
+        </details>
+
+        <details class="card">
+          <summary>Do you work remotely?</summary>
+          <p>
+            Yes. I work fully remotely and collaborate with teams across time
+            zones.
+          </p>
+        </details>
+
+        <details class="card">
+          <summary>What is your engagement model?</summary>
+          <p>
+            I work on fixed-price projects, monthly retainers, or hourly
+            consulting depending on scope.
+          </p>
+        </details>
+
+        <details class="card">
+          <summary>Can you help with existing or failing projects?</summary>
+          <p>
+            Absolutely. I often help teams audit, refactor, stabilize, and scale
+            existing systems.
+          </p>
+        </details>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <h2>Let’s build something</h2>
+
+        <div class="card">
+          <p class="muted">
+            Tell me about your idea and timeline. I usually reply within 24
             hours.
           </p>
-          <p style="margin-top: 10px">
-            <a
-              class="btn"
-              href="mailto:hello@jainammehta.in?subject=Project%20Inquiry"
-              >Email me</a
-            >
+
+          <div class="cta">
+            <a class="btn" href="mailto:hello@jainammehta.in">Email me</a>
             <a
               class="btn secondary"
               href="https://www.linkedin.com/in/jainam-mehta/"
               target="_blank"
               >LinkedIn</a
             >
-          </p>
+          </div>
         </div>
       </section>
     </main>
 
-    <footer class="container">
-      <p>© <span id="y"></span> Jainam Mehta • <a href="/blog/">Blog</a></p>
-    </footer>
-
-    <script>
-      document.getElementById("y").textContent = new Date().getFullYear();
-    </script>
-
-    <!-- Ad unit (kept) -->
-    <ins
-      class="adsbygoogle"
-      style="display: block"
-      data-ad-client="ca-pub-5140839488088296"
-      data-ad-slot="5148873560"
-      data-ad-format="auto"
-      data-full-width-responsive="true"
-    ></ins>
-    <script>
-      (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-    <amp-auto-ads
-      type="adsense"
-      data-ad-client="ca-pub-5140839488088296"
-    ></amp-auto-ads>
+    <footer class="container footer">© 2025 Jainam Mehta</footer>
   </body>
 </html>
