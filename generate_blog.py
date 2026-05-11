@@ -46,6 +46,171 @@ OLLAMA_BASE = "http://localhost:11434"
 AUTHOR = "Jainam Mehta"
 AUTHOR_FULL = "Jainam Paresh Mehta"
 
+POST_CRITICAL_CSS = """
+    body {
+      background: #0d1117;
+      color: #e6edf3;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    header {
+      background: rgba(13, 17, 23, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav-inner {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: 1120px;
+      padding: 16px 24px;
+    }
+
+    .links {
+      align-items: center;
+      display: flex;
+      gap: 18px;
+    }
+
+    .post-wrap {
+      margin: 56px auto;
+      max-width: 820px;
+      padding: 0 24px 88px;
+    }
+
+    .back-link {
+      color: #2ecc71;
+      display: inline-block;
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+
+    .post-header {
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      margin-bottom: 32px;
+      padding-bottom: 28px;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .post-header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      letter-spacing: 0;
+      line-height: 1.14;
+      margin: 0 0 16px;
+      max-width: 780px;
+    }
+
+    .post-meta {
+      color: #9aa4b2;
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 15px;
+      gap: 12px;
+    }
+
+    .post-body {
+      font-size: 18px;
+      line-height: 1.82;
+    }
+
+    .post-body h2 {
+      color: #e6edf3;
+      font-size: 28px;
+      line-height: 1.25;
+      margin: 42px 0 14px;
+    }
+
+    .post-body h3 {
+      color: #2ecc71;
+      font-size: 22px;
+      line-height: 1.35;
+      margin: 34px 0 10px;
+    }
+
+    .post-body p {
+      color: #c9d1d9;
+      margin: 0 0 20px;
+    }
+
+    .post-body ul {
+      margin: 0 0 22px;
+      padding-left: 22px;
+    }
+
+    .post-body li {
+      color: #c9d1d9;
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+
+    .post-body strong {
+      color: #f0f6fc;
+    }
+
+    .post-body pre {
+      background: #07120d;
+      border: 1px solid rgba(46, 204, 113, 0.18);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow-x: auto;
+      padding: 18px;
+    }
+
+    .post-body code {
+      background: rgba(46, 204, 113, 0.1);
+      border-radius: 4px;
+      color: #2ecc71;
+      font-size: 0.9em;
+      padding: 2px 6px;
+    }
+
+    .post-body pre code {
+      background: transparent;
+      color: #d6f5df;
+      display: block;
+      line-height: 1.6;
+      padding: 0;
+    }
+
+    .post-footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.16);
+      color: #9aa4b2;
+      font-size: 15px;
+      margin-top: 52px;
+      padding-top: 28px;
+    }
+
+    .post-footer a {
+      color: #2ecc71;
+    }
+
+    @media (max-width: 720px) {
+      .post-wrap {
+        margin-top: 36px;
+        padding-inline: 18px;
+      }
+
+      .post-body {
+        font-size: 16px;
+        line-height: 1.76;
+      }
+
+      .links {
+        display: none;
+      }
+    }
+"""
+
 PREFERRED_MODELS = [
     "qwen2.5:14b",
     "qwen2.5:7b",
@@ -402,6 +567,7 @@ def create_post_html(topic: dict[str, Any], content_html: str, date_str: str, da
 
   <link rel="canonical" href="{canonical}" />
   <link rel="stylesheet" href="/assets/style.css" />
+  <style>{POST_CRITICAL_CSS}</style>
   <script type="application/ld+json">{json.dumps(json_ld, ensure_ascii=False)}</script>
 </head>
 <body>
