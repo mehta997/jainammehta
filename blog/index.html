@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XYH3ZYB3G3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XYH3ZYB3G3');
+  </script>
+
+  <!-- Favicon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
+  <link rel="manifest" href="/assets/site.webmanifest" />
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0f0f0f" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+
+  <title>Tech Blog | Jainam Mehta — Node.js, AI, Ecommerce & System Design</title>
+  <meta name="description" content="Technical blog by Jainam Mehta — a Senior Software Engineer sharing insights on Node.js, Next.js, AI agents, RAG systems, Shopify, microservices, and system design. Written in Indian English with real-world experience." />
+  <meta name="keywords" content="Jainam Mehta blog, Node.js tutorials, Next.js tips, AI agents, RAG system design, Shopify development, microservices, backend engineering blog, software engineering India" />
+  <meta name="author" content="Jainam Paresh Mehta" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Tech Blog | Jainam Mehta — Node.js, AI, Ecommerce & System Design" />
+  <meta property="og:description" content="Real-world engineering insights from 8+ years of building scalable systems, AI agents, and ecommerce platforms." />
+  <meta property="og:url" content="https://jainammehta.in/blog/" />
+  <meta property="og:image" content="https://jainammehta.in/assets/1738839200854.jpeg" />
+  <meta property="og:site_name" content="Jainam Mehta | Software Engineer" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tech Blog | Jainam Mehta" />
+  <meta name="twitter:description" content="Real-world engineering insights on Node.js, AI agents, Shopify, and system design." />
+  <meta name="twitter:image" content="https://jainammehta.in/assets/1738839200854.jpeg" />
+
+  <link rel="canonical" href="https://jainammehta.in/blog/" />
+  <link rel="stylesheet" href="/assets/style.css" />
+
+  <!-- Blog Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "Jainam Mehta Tech Blog",
+    "url": "https://jainammehta.in/blog/",
+    "description": "Technical blog by Jainam Mehta covering Node.js, Next.js, AI agents, RAG systems, Shopify, microservices, and system design.",
+    "author": {
+      "@type": "Person",
+      "name": "Jainam Paresh Mehta",
+      "url": "https://jainammehta.in/",
+      "sameAs": [
+        "https://www.linkedin.com/in/jainam-mehta/",
+        "https://github.com/mehta997"
+      ]
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Jainam Paresh Mehta"
+    }
+  }
+  </script>
+
+  <style>
+    .blog-hero {
+      text-align: center;
+      padding: 64px 24px 40px;
+    }
+    .blog-hero h1 { font-size: 36px; }
+    .blog-hero p { color: var(--muted); margin-top: 12px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      padding: 0 24px 80px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(46,204,113,0.08);
+    }
+
+    .blog-card .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: rgba(46,204,113,0.12);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 6px;
+    }
+
+    .blog-card h2 {
+      font-size: 18px;
+      line-height: 1.4;
+    }
+    .blog-card h2 a { color: var(--text); }
+    .blog-card h2 a:hover { color: var(--accent); }
+
+    .blog-card .excerpt {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      flex: 1;
+    }
+
+    .blog-card .meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .blog-card .read-more {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 80px 24px;
+      color: var(--muted);
+    }
+    .empty-state p { margin-top: 12px; }
+
+    nav .nav-inner {
+      max-width: 1100px;
+      margin: auto;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <div class="nav-inner">
+      <a href="/" class="logo">Jainam Mehta</a>
+      <div class="links">
+        <a href="/#about">About</a>
+        <a href="/#services">Services</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#projects">Work</a>
+        <a href="/blog/" class="accent">Blog</a>
+        <a href="/#contact" class="btn">Contact</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="blog-hero">
+  <h1>Tech <span class="accent">Blog</span></h1>
+  <p>Real-world engineering insights from 8+ years of building scalable systems, AI agents, ecommerce platforms, and backend architecture — written in my own words.</p>
+</section>
+
+<main id="blog-posts">
+  <!-- POSTS_START -->
+<div class="blog-grid">
+  <article class="blog-card">
+    <div></div>
+    <h2><a href="/blog/posts/2026-05-11-postgresql-performance-tuning.html">PostgreSQL Performance Tuning: What I Learned the Hard Way</a></h2>
+    <p class="excerpt">As a seasoned software engineer, I&#x27;ve had my fair share of dealing with slow queries and performance issues in our databases. In this post, I&#x27;ll share some hard</p>
+    <div class="meta">
+      <span>May 11, 2026</span>
+      <a href="/blog/posts/2026-05-11-postgresql-performance-tuning.html" class="read-more">Read</a>
+    </div>
+  </article>
+</div>
+  <!-- POSTS_END -->
+</main>
+
+<footer style="text-align:center; padding: 40px 24px; border-top: 1px solid var(--border); color: var(--muted); font-size: 14px;">
+  <p>&copy; 2026 Jainam Mehta &mdash; <a href="/" style="color:var(--accent)">Portfolio</a> &bull; <a href="https://github.com/mehta997" rel="noopener noreferrer" style="color:var(--accent)">GitHub</a> &bull; <a href="https://www.linkedin.com/in/jainam-mehta/" rel="noopener noreferrer" style="color:var(--accent)">LinkedIn</a></p>
+</footer>
+
+</body>
+</html>
