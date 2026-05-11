@@ -53,7 +53,7 @@ POST_CRITICAL_CSS = """
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
     }
 
-    header {
+    body > header {
       background: rgba(13, 17, 23, 0.92);
       border-bottom: 1px solid rgba(148, 163, 184, 0.16);
       position: sticky;
@@ -90,9 +90,11 @@ POST_CRITICAL_CSS = """
     }
 
     .post-header {
+      background: transparent;
       border-bottom: 1px solid rgba(148, 163, 184, 0.16);
       margin-bottom: 32px;
       padding-bottom: 28px;
+      position: static;
     }
 
     .post-tags {

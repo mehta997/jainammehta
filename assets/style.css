@@ -33,7 +33,7 @@ a {
 }
 
 /* Header */
-header {
+body > header {
   position: sticky;
   top: 0;
   background: rgba(13, 17, 23, 0.7);
@@ -441,7 +441,11 @@ details p {
 }
 
 .post-header {
+  background: transparent;
+  border-bottom: 1px solid var(--border);
   margin-bottom: 36px;
+  padding-bottom: 28px;
+  position: static;
 }
 
 .post-tags {
