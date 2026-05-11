@@ -611,8 +611,6 @@ def create_post_html(topic: dict[str, Any], content_html: str, date_str: str, da
       </p>
       <p>
         <a href="https://www.linkedin.com/in/jainam-mehta/" rel="noopener noreferrer">Connect on LinkedIn</a>
-        <span> | </span>
-        <a href="https://github.com/mehta997" rel="noopener noreferrer">GitHub</a>
       </p>
     </footer>
   </article>
