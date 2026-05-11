@@ -504,6 +504,24 @@ details p {
   padding: 2px 6px;
 }
 
+.post-body pre {
+  background: #07120d;
+  border: 1px solid rgba(46, 204, 113, 0.18);
+  border-radius: 8px;
+  margin: 22px 0;
+  overflow-x: auto;
+  padding: 16px;
+}
+
+.post-body pre code {
+  background: transparent;
+  color: #d6f5df;
+  display: block;
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 0;
+}
+
 .post-footer {
   border-top: 1px solid var(--border);
   color: var(--muted);

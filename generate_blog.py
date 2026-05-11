@@ -47,11 +47,13 @@ AUTHOR = "Jainam Mehta"
 AUTHOR_FULL = "Jainam Paresh Mehta"
 
 PREFERRED_MODELS = [
+    "qwen2.5:14b",
+    "qwen2.5:7b",
+    "qwen2.5",
+    "qwen2",
     "llama3.2",
     "llama3.1",
     "llama3",
-    "qwen2.5",
-    "qwen2",
     "mistral",
     "gemma2",
     "gemma",
@@ -193,7 +195,7 @@ def get_ollama_model() -> str | None:
 
     for preferred in PREFERRED_MODELS:
         for original, plain in zip(available, available_names):
-            if preferred == plain or preferred in plain:
+            if preferred == original or preferred == plain or preferred in plain:
                 return original
 
     return available[0] if available else None
@@ -201,17 +203,20 @@ def get_ollama_model() -> str | None:
 
 def generate_with_ollama(model: str, topic: dict[str, Any], date_str: str) -> str:
     system_prompt = (
-        "You are Jainam Mehta, a Senior Software Engineer from India with 8+ years of experience. "
-        "Write in natural Indian English: direct, practical, slightly personal, and clear. "
-        "Use a voice like a senior developer explaining to another developer. "
-        "Use phrases naturally like 'basically', 'actually', 'in my experience', 'I have seen many times', "
-        "'kindly note', and 'as such', but do not overuse them. "
-        "Write 700 to 1000 words with 4 to 6 sections. "
-        "Use target keywords naturally for SEO. "
+        "You are Jainam Mehta, a senior Indian backend engineer with 8+ years of production experience. "
+        "Write like a real engineer, not like AI content. Keep it human sounding, conversational, and practical. "
+        "Use Indian English naturally: simple, direct, slightly imperfect, not overly polished. "
+        "Use short paragraphs. Avoid corporate tone, marketing language, hype, and generic motivational lines. "
+        "Explain production-level backend thinking with practical examples, tradeoffs, and failure cases. "
+        "Include Node.js examples when relevant. Include Redis, queues, caching, rate limiting, idempotency, "
+        "database pressure, observability, and system design concepts naturally where they fit. "
+        "Write 1200 to 1800 words with SEO-friendly ## headings. "
+        "The content area is AI + Backend Engineering + Production Systems. "
+        "Use target keywords naturally for SEO, but do not stuff keywords. "
         "Do not use the words freelance, freelancer, or freelancing. "
         "Avoid fake stories, fake metrics, and overclaiming. "
-        "Format only in Markdown with ## headings, paragraphs, and short bullet lists. "
-        "End with a ## My Takeaway section."
+        "Format only in Markdown with ## headings, paragraphs, short bullet lists, and fenced code blocks. "
+        "End with a ## My Practical Takeaway section."
     )
     user_prompt = (
         f"Write today's technical blog post for {date_str}.\n\n"
@@ -219,7 +224,9 @@ def generate_with_ollama(model: str, topic: dict[str, Any], date_str: str) -> st
         f"Tags: {', '.join(topic['tags'])}\n"
         f"Target keywords: {topic['keywords']}\n"
         f"Angle: {topic['prompt_hint']}\n\n"
-        "Make it practical, honest, readable, and useful for founders, engineering managers, and developers."
+        "Make it practical, honest, readable, and useful for backend developers and engineering teams. "
+        "Add at least one small Node.js code example and one Redis or system design example. "
+        "Keep paragraphs short and avoid overly polished English."
     )
     payload = {
         "model": model,
@@ -227,9 +234,9 @@ def generate_with_ollama(model: str, topic: dict[str, Any], date_str: str) -> st
         "prompt": user_prompt,
         "stream": True,
         "options": {
-            "temperature": 0.72,
+            "temperature": 0.68,
             "top_p": 0.9,
-            "num_predict": 1100,
+            "num_predict": 2600,
         },
     }
     print(f"Generating post with Ollama model: {model}")
@@ -251,6 +258,9 @@ def markdown_to_html(markdown: str) -> str:
     parts: list[str] = []
     paragraph: list[str] = []
     list_items: list[str] = []
+    code_lines: list[str] = []
+    in_code_block = False
+    code_language = ""
 
     def flush_paragraph() -> None:
         if paragraph:
@@ -268,6 +278,23 @@ def markdown_to_html(markdown: str) -> str:
 
     for raw_line in lines:
         line = raw_line.strip()
+        if line.startswith("```"):
+            if in_code_block:
+                code = html.escape("\n".join(code_lines))
+                lang_class = f' class="language-{html.escape(code_language)}"' if code_language else ""
+                parts.append(f"<pre><code{lang_class}>{code}</code></pre>")
+                code_lines.clear()
+                code_language = ""
+                in_code_block = False
+            else:
+                flush_paragraph()
+                flush_list()
+                code_language = line[3:].strip().split(" ", 1)[0]
+                in_code_block = True
+            continue
+        if in_code_block:
+            code_lines.append(raw_line.rstrip())
+            continue
         if not line:
             flush_paragraph()
             flush_list()
@@ -294,6 +321,9 @@ def markdown_to_html(markdown: str) -> str:
 
     flush_paragraph()
     flush_list()
+    if in_code_block:
+        code = html.escape("\n".join(code_lines))
+        parts.append(f"<pre><code>{code}</code></pre>")
     return "\n".join(parts)
 
 
@@ -533,6 +563,7 @@ def publish_to_git(date_str: str, slug: str) -> None:
         "sitemap.xml",
         "generate_blog.py",
         "daily_publish_blog.bat",
+        "pull_blog_models.bat",
         "install_blog_startup_task.bat",
     )
     status = git_command("status", "--porcelain")
