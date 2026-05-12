@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XYH3ZYB3G3"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XYH3ZYB3G3');
+  </script>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png" />
+  <link rel="manifest" href="/assets/site.webmanifest" />
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+  <title>Building AI Agents with LangChain: A Practical Guide | Jainam Mehta</title>
+  <meta name="description" content="Hey everyone! Today we&#x27;re diving into the world of building intelligent, autonomous agents using LangChain. If you&#x27;ve ever wanted to integrate an LLM (Large Lan" />
+  <meta name="keywords" content="AI agents LangChain, autonomous agents, tool calling, LLM agents, agent workflow, Jainam Mehta blog" />
+  <meta name="author" content="Jainam Paresh Mehta" />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Building AI Agents with LangChain: A Practical Guide | Jainam Mehta" />
+  <meta property="og:description" content="Hey everyone! Today we&#x27;re diving into the world of building intelligent, autonomous agents using LangChain. If you&#x27;ve ever wanted to integrate an LLM (Large Lan" />
+  <meta property="og:url" content="https://jainammehta.in/blog/posts/2026-05-12-ai-agents-langchain-practical.html" />
+  <meta property="og:image" content="https://jainammehta.in/assets/1738839200854.jpeg" />
+  <meta property="article:author" content="Jainam Paresh Mehta" />
+  <meta property="article:published_time" content="2026-05-12" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Building AI Agents with LangChain: A Practical Guide" />
+  <meta name="twitter:description" content="Hey everyone! Today we&#x27;re diving into the world of building intelligent, autonomous agents using LangChain. If you&#x27;ve ever wanted to integrate an LLM (Large Lan" />
+  <meta name="twitter:image" content="https://jainammehta.in/assets/1738839200854.jpeg" />
+
+  <link rel="canonical" href="https://jainammehta.in/blog/posts/2026-05-12-ai-agents-langchain-practical.html" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    body {
+      background: #0d1117;
+      color: #e6edf3;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+
+    body > header {
+      background: rgba(13, 17, 23, 0.92);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .nav-inner {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: 1120px;
+      padding: 16px 24px;
+    }
+
+    .links {
+      align-items: center;
+      display: flex;
+      gap: 18px;
+    }
+
+    .post-wrap {
+      margin: 56px auto;
+      max-width: 820px;
+      padding: 0 24px 88px;
+    }
+
+    .back-link {
+      color: #2ecc71;
+      display: inline-block;
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+
+    .post-header {
+      background: transparent;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      margin-bottom: 32px;
+      padding-bottom: 28px;
+      position: static;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .post-header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      letter-spacing: 0;
+      line-height: 1.14;
+      margin: 0 0 16px;
+      max-width: 780px;
+    }
+
+    .post-meta {
+      color: #9aa4b2;
+      display: flex;
+      flex-wrap: wrap;
+      font-size: 15px;
+      gap: 12px;
+    }
+
+    .post-body {
+      font-size: 18px;
+      line-height: 1.82;
+    }
+
+    .post-body h2 {
+      color: #e6edf3;
+      font-size: 28px;
+      line-height: 1.25;
+      margin: 42px 0 14px;
+    }
+
+    .post-body h3 {
+      color: #2ecc71;
+      font-size: 22px;
+      line-height: 1.35;
+      margin: 34px 0 10px;
+    }
+
+    .post-body p {
+      color: #c9d1d9;
+      margin: 0 0 20px;
+    }
+
+    .post-body ul {
+      margin: 0 0 22px;
+      padding-left: 22px;
+    }
+
+    .post-body li {
+      color: #c9d1d9;
+      margin-bottom: 10px;
+      padding-left: 4px;
+    }
+
+    .post-body strong {
+      color: #f0f6fc;
+    }
+
+    .post-body pre {
+      background: #07120d;
+      border: 1px solid rgba(46, 204, 113, 0.18);
+      border-radius: 8px;
+      margin: 24px 0;
+      overflow-x: auto;
+      padding: 18px;
+    }
+
+    .post-body code {
+      background: rgba(46, 204, 113, 0.1);
+      border-radius: 4px;
+      color: #2ecc71;
+      font-size: 0.9em;
+      padding: 2px 6px;
+    }
+
+    .post-body pre code {
+      background: transparent;
+      color: #d6f5df;
+      display: block;
+      line-height: 1.6;
+      padding: 0;
+    }
+
+    .post-footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.16);
+      color: #9aa4b2;
+      font-size: 15px;
+      margin-top: 52px;
+      padding-top: 28px;
+    }
+
+    .post-footer a {
+      color: #2ecc71;
+    }
+
+    @media (max-width: 720px) {
+      .post-wrap {
+        margin-top: 36px;
+        padding-inline: 18px;
+      }
+
+      .post-body {
+        font-size: 16px;
+        line-height: 1.76;
+      }
+
+      .links {
+        display: none;
+      }
+    }
+</style>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Building AI Agents with LangChain: A Practical Guide", "url": "https://jainammehta.in/blog/posts/2026-05-12-ai-agents-langchain-practical.html", "datePublished": "2026-05-12", "dateModified": "2026-05-12", "author": {"@type": "Person", "name": "Jainam Paresh Mehta", "url": "https://jainammehta.in/"}, "publisher": {"@type": "Person", "name": "Jainam Paresh Mehta"}, "description": "Hey everyone! Today we're diving into the world of building intelligent, autonomous agents using LangChain. If you've ever wanted to integrate an LLM (Large Lan", "keywords": "AI agents LangChain, autonomous agents, tool calling, LLM agents, agent workflow", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://jainammehta.in/blog/posts/2026-05-12-ai-agents-langchain-practical.html"}, "image": "https://jainammehta.in/assets/1738839200854.jpeg"}</script>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="nav-inner">
+        <a href="/" class="logo">Jainam Mehta</a>
+        <div class="links">
+          <a href="/#about">About</a>
+          <a href="/#services">Services</a>
+          <a href="/#projects">Work</a>
+          <a href="/blog/" class="accent">Blog</a>
+          <a href="/#contact" class="btn">Contact</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <article class="post-wrap" itemscope itemtype="https://schema.org/BlogPosting">
+    <a href="/blog/" class="back-link">Back to Blog</a>
+    <header class="post-header">
+      <div class="post-tags"><span class="tag">AI</span><span class="tag">LangChain</span><span class="tag">Agents</span></div>
+      <h1 itemprop="headline">Building AI Agents with LangChain: A Practical Guide</h1>
+      <div class="post-meta">
+        <span>By <strong itemprop="author">Jainam Mehta</strong></span>
+        <span itemprop="datePublished" content="2026-05-12">May 12, 2026</span>
+        <span>7 min read</span>
+      </div>
+    </header>
+
+    <div class="post-body" itemprop="articleBody">
+<p>Hey everyone! Today we&#x27;re diving into the world of building intelligent, autonomous agents using LangChain. If you&#x27;ve ever wanted to integrate an LLM (Large Language Model) like Claude or GPT-4 into your backend systems but weren&#x27;t sure how to start, this guide is for you. We&#x27;ll cover the basics and some advanced features that will help you build robust AI-driven applications.</p>
+<h3>What are LangChain Agents?</h3>
+<p>LangChain agents are essentially scripts that automate interactions with an LLM. They can be thought of as autonomous bots that handle tasks like fetching data from APIs, making decisions based on complex rules, or even controlling other systems. The key idea is to use the power of large language models to make your backend smarter and more efficient.</p>
+<h3>Tools: Integrating External Systems</h3>
+<p>When building agents, one common requirement is integrating with external tools or services. LangChain supports this through &quot;tool calls.&quot; Here&#x27;s a simple example using Node.js:</p>
+<pre><code class="language-javascript">const axios = require(&#x27;axios&#x27;);
+const agent = new Agent({
+  llm: LLMS.CLAUDE,
+});
+
+agent.addTool({
+  name: &#x27;fetchData&#x27;,
+  description: &#x27;Fetch data from an external API.&#x27;,
+  func: async () =&gt; {
+    const response = await axios.get(&#x27;https://api.example.com/data&#x27;);
+    return response.data;
+  },
+});</code></pre>
+<p>In this snippet, we&#x27;re adding a tool to our agent that fetches data from an API. This can be anything from weather updates to user account information. The magic here is how the LLM decides when and how to use these tools based on its understanding of the task at hand.</p>
+<h3>Memory: Storing Context</h3>
+<p>One critical aspect of building effective agents is managing memory—keeping track of context so that the agent doesn&#x27;t lose its place in a conversation or task sequence. LangChain provides several types of memory:</p>
+<ul><li><strong>Conversation Memory</strong>: Keeps track of past messages between the user and the LLM.</li><li><strong>VectorDB Memory</strong>: Useful for storing large amounts of text data, like articles or documents.</li></ul>
+<p>Here&#x27;s how you might set up vector database memory with Redis for quick access to contextual information:</p>
+<pre><code class="language-javascript">const redis = require(&#x27;redis&#x27;);
+const client = redis.createClient();
+
+agent.use(new VectorMemory({
+  persistor: new Persistor(client),
+}));</code></pre>
+<p>Using Redis as a backend for your memory system helps ensure that the agent can quickly retrieve and store data without slowing down.</p>
+<h3>ReAct Loops: Decision Making</h3>
+<p>ReAct loops are iterative processes where the LLM makes decisions, takes actions, observes outcomes, and adjusts its behavior accordingly. This is particularly useful in complex workflows or games with multiple steps.</p>
+<p>A basic ReAct loop might look like:</p>
+<p>1. <strong>React</strong>: The agent decides on an action based on current information. 2. <strong>Act</strong>: It executes the chosen action (e.g., calling a tool). 3. <strong>Observe</strong>: Gathers new data from the environment. 4. <strong>Loop</strong>: Goes back to React with updated context.</p>
+<p>LangChain&#x27;s agents can be configured to run these loops, making them adaptable and intelligent problem solvers.</p>
+<h3>Failure Handling</h3>
+<p>No system is perfect, so handling failures gracefully is crucial. LangChain allows you to specify fallback actions or retry mechanisms when something goes wrong:</p>
+<pre><code class="language-javascript">agent.addTool({
+  name: &#x27;sendEmail&#x27;,
+  description: &#x27;Send an email using SMTP.&#x27;,
+  func: async () =&gt; {
+    try {
+      await sendViaSMTP();
+    } catch (error) {
+      console.error(&#x27;Failed to send email:&#x27;, error);
+      fallbackAction(); // Define a fallback action
+    }
+  },
+});</code></pre>
+<p>This example shows how you can catch errors and handle them appropriately, ensuring your agents stay functional even when unexpected issues arise.</p>
+<h3>Human Approval Points</h3>
+<p>In scenarios where the agent&#x27;s decisions could have significant consequences (like financial transactions or legal actions), it’s wise to include human approval points. This means pausing the workflow at critical junctures for a real person to review and confirm before proceeding:</p>
+<pre><code class="language-javascript">agent.use(new HumanApproval({
+  approve: async () =&gt; {
+    const response = await getUserConfirmation(); // Some way to get user input
+    return response === &#x27;yes&#x27;;
+  },
+}));</code></pre>
+<p>This ensures that the agent doesn&#x27;t make irreversible decisions without human oversight.</p>
+<h3>Production Observability</h3>
+<p>When deploying agents in a production environment, observability is key. You need to monitor performance and errors closely:</p>
+<ul><li><strong>Metrics</strong>: Track how often tools are called, how long actions take, etc.</li><li><strong>Logging</strong>: Keep detailed logs for debugging.</li><li><strong>Alerting</strong>: Set up alerts for critical issues.</li></ul>
+<p>Using Prometheus or Grafana with your Redis setup can help you visualize metrics effectively. For logging, consider using a structured format like JSON and an aggregation service like Loki:</p>
+<pre><code class="language-javascript">agent.use(new LoggingMiddleware({
+  logger: new ConsoleLogger(),
+}));</code></pre>
+<h3>My Practical Takeaway</h3>
+<p>Building AI agents with LangChain is exciting but requires careful planning and testing. Focus on robust tool integration, context management, intelligent decision-making loops, and strong error handling to create reliable systems. Remember, the goal is not just building something that works once, but creating a resilient system that can adapt and learn over time.</p>
+<p>So go ahead and experiment with LangChain—there&#x27;s a whole world of automation waiting for you!</p>
+    </div>
+
+    <footer class="post-footer">
+      <p>
+        Written by <a href="/">Jainam Mehta</a>, Senior Software Engineer working with Node.js, Next.js,
+        AI systems, ecommerce platforms, and backend architecture.
+      </p>
+      <p>
+        <a href="https://www.linkedin.com/in/jainam-mehta/" rel="noopener noreferrer">Connect on LinkedIn</a>
+      </p>
+    </footer>
+  </article>
+</body>
+</html>
