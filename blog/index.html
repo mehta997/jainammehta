@@ -76,7 +76,7 @@
 
     .blog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
       padding: 0 24px 80px;
       max-width: 1100px;
@@ -86,13 +86,13 @@
     .blog-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 18px;
       padding: 24px;
-      backdrop-filter: blur(12px);
-      transition: transform 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(14px);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 16px;
     }
     .blog-card:hover {
       transform: translateY(-4px);
@@ -128,8 +128,16 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 12px;
       font-size: 13px;
       color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .blog-card time {
+      display: inline-flex;
+      color: var(--accent);
+      font-weight: 600;
     }
 
     .blog-card .read-more {
@@ -182,12 +190,22 @@
   <!-- POSTS_START -->
 <div class="blog-grid">
   <article class="blog-card">
-    <div></div>
+    <div class="tag">AI</div>
     <h2><a href="/blog/posts/2026-05-12-ai-agents-langchain-practical.html">Building AI Agents with LangChain: A Practical Guide</a></h2>
-    <p class="excerpt">Hey everyone! Today we&#x27;re diving into the world of building intelligent, autonomous agents using LangChain. If you&#x27;ve ever wanted to integrate an LLM (Large Lan</p>
+    <p class="excerpt">Hey everyone! Today we&#x27;re diving into the world of building intelligent, autonomous agents using LangChain. If you&#x27;ve ever wanted to integrate an LLM (Large Language Model) into a real application, this practical guide will help you start fast.</p>
     <div class="meta">
-      <span>May 12, 2026</span>
+      <time datetime="2026-05-12">May 12, 2026</time>
       <a href="/blog/posts/2026-05-12-ai-agents-langchain-practical.html" class="read-more">Read</a>
+    </div>
+  </article>
+
+  <article class="blog-card">
+    <div class="tag">Performance</div>
+    <h2><a href="/blog/posts/2026-05-11-postgresql-performance-tuning.html">PostgreSQL Performance Tuning: Practical Tips for Fast Queries</a></h2>
+    <p class="excerpt">PostgreSQL is powerful, but slow queries can still happen. In this post, we cover indexes, query plans, connection pooling, and real tuning techniques that improve throughput and latency.</p>
+    <div class="meta">
+      <time datetime="2026-05-11">May 11, 2026</time>
+      <a href="/blog/posts/2026-05-11-postgresql-performance-tuning.html" class="read-more">Read</a>
     </div>
   </article>
 </div>
