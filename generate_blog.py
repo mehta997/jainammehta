@@ -647,21 +647,27 @@ def load_existing_posts_meta() -> list[dict[str, Any]]:
 
     for html_file in POSTS_DIR.glob("*.html"):
         text = html_file.read_text(encoding="utf-8")
-        title_match = re.search(r"<title>(.*?) \| Jainam Mehta</title>", text)
+        title_match = re.search(r"<title>\s*(.*?)\s*</title>", text, flags=re.DOTALL)
         date_match = re.search(r'"datePublished"\s*:\s*"(\d{4}-\d{2}-\d{2})"', text)
-        desc_match = re.search(r'<meta name="description" content="(.*?)"', text, flags=re.DOTALL)
-        tags = re.findall(r'<span class="tag">(.*?)</span>', text[:1500])
+        desc_match = re.search(
+            r'<meta\s+[^>]*name="description"[^>]*content="(.*?)"',
+            text,
+            flags=re.DOTALL,
+        )
+        tags = re.findall(r'<span class="tag">\s*(.*?)\s*</span\s*>', text, flags=re.DOTALL)
         if not title_match or not date_match:
             continue
         date = dt.date.fromisoformat(date_match.group(1))
+        title = re.sub(r"\s+", " ", html.unescape(title_match.group(1))).strip()
+        title = re.sub(r"\s*\|\s*Jainam Mehta$", "", title).strip()
         meta.append(
             {
                 "slug": html_file.stem,
-                "title": html.unescape(title_match.group(1)),
+                "title": title,
                 "date": date.isoformat(),
                 "date_display": date.strftime("%B %d, %Y"),
                 "excerpt": html.unescape(desc_match.group(1)) if desc_match else "",
-                "tags": [html.unescape(tag) for tag in tags[:3]],
+                "tags": [re.sub(r"\s+", " ", html.unescape(strip_tags(tag))).strip() for tag in tags[:3]],
             }
         )
     return meta
