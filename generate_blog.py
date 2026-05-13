@@ -24,6 +24,7 @@ from __future__ import annotations
 import datetime as dt
 import html
 import json
+import os
 import re
 import subprocess
 import sys
@@ -43,6 +44,8 @@ BLOG_DIR = REPO_DIR / "blog"
 POSTS_DIR = BLOG_DIR / "posts"
 SITE_URL = "https://jainammehta.in"
 OLLAMA_BASE = "http://localhost:11434"
+OLLAMA_CONNECT_TIMEOUT_SECONDS = 10
+OLLAMA_READ_TIMEOUT_SECONDS = int(os.environ.get("OLLAMA_READ_TIMEOUT_SECONDS", "600"))
 AUTHOR = "Jainam Mehta"
 AUTHOR_FULL = "Jainam Paresh Mehta"
 
@@ -408,15 +411,33 @@ def generate_with_ollama(model: str, topic: dict[str, Any], date_str: str) -> st
     }
     print(f"Generating post with Ollama model: {model}")
     chunks: list[str] = []
-    with requests.post(f"{OLLAMA_BASE}/api/generate", json=payload, stream=True, timeout=(10, 90)) as response:
-        response.raise_for_status()
-        for line in response.iter_lines(decode_unicode=True):
-            if not line:
-                continue
-            data = json.loads(line)
-            chunks.append(data.get("response", ""))
-            if data.get("done"):
-                break
+    timeout = (OLLAMA_CONNECT_TIMEOUT_SECONDS, OLLAMA_READ_TIMEOUT_SECONDS)
+    try:
+        with requests.post(f"{OLLAMA_BASE}/api/generate", json=payload, stream=True, timeout=timeout) as response:
+            response.raise_for_status()
+            for line in response.iter_lines(decode_unicode=True):
+                if not line:
+                    continue
+                data = json.loads(line)
+                chunks.append(data.get("response", ""))
+                if data.get("done"):
+                    break
+    except requests.exceptions.ReadTimeout as exc:
+        partial_content = "".join(chunks).strip()
+        if len(partial_content) >= 400:
+            print(
+                "WARNING: Ollama timed out after receiving enough content. "
+                "Publishing the partial generated post."
+            )
+            return partial_content
+        raise RuntimeError(
+            "Ollama took too long to respond. "
+            f"The current read timeout is {OLLAMA_READ_TIMEOUT_SECONDS}s. "
+            "Try rerunning, use a smaller model, or increase OLLAMA_READ_TIMEOUT_SECONDS."
+        ) from exc
+    except requests.exceptions.RequestException as exc:
+        raise RuntimeError(f"Ollama generation failed: {exc}") from exc
+
     return "".join(chunks).strip()
 
 
@@ -812,5 +833,8 @@ if __name__ == "__main__":
     started = time.time()
     try:
         main()
+    except RuntimeError as exc:
+        print(f"ERROR: {exc}")
+        sys.exit(1)
     finally:
         print(f"Finished in {time.time() - started:.1f}s")
