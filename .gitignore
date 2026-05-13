@@ -2,3 +2,10 @@ __pycache__/
 *.pyc
 daily_blog.log
 qwen_model_pull.log
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
