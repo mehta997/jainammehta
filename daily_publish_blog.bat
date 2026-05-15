@@ -3,10 +3,13 @@ setlocal
 
 cd /d "%~dp0"
 
-curl -s http://localhost:11434/api/tags >nul 2>nul
+python -c "import boto3" >nul 2>&1
 if errorlevel 1 (
-  start "" /min ollama serve
-  timeout /t 15 /nobreak >nul
+  echo [%date% %time%] boto3 not found, installing... >> daily_blog.log 2>&1
+  python -m pip install boto3 >> daily_blog.log 2>&1
+  if errorlevel 1 (
+    py -3 -m pip install boto3 >> daily_blog.log 2>&1
+  )
 )
 
 python generate_blog.py >> daily_blog.log 2>&1

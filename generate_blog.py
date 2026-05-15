@@ -3,7 +3,7 @@
 Daily blog publisher for jainammehta.in.
 
 What it does:
-  1. Finds the best available local Ollama model.
+  1. Finds the configured AWS Bedrock model.
   2. Generates one practical SEO-friendly technical blog post.
   3. Publishes it as a static HTML page under blog/posts/.
   4. Updates blog/index.html and sitemap.xml.
@@ -38,14 +38,28 @@ except ImportError:
     subprocess.check_call([sys.executable, "-m", "pip", "install", "requests"])
     import requests
 
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "python-dotenv"])
+    from dotenv import load_dotenv
+    load_dotenv()
+
 
 REPO_DIR = Path(__file__).parent.resolve()
 BLOG_DIR = REPO_DIR / "blog"
 POSTS_DIR = BLOG_DIR / "posts"
 SITE_URL = "https://jainammehta.in"
-OLLAMA_BASE = "http://localhost:11434"
-OLLAMA_CONNECT_TIMEOUT_SECONDS = 10
-OLLAMA_READ_TIMEOUT_SECONDS = int(os.environ.get("OLLAMA_READ_TIMEOUT_SECONDS", "600"))
+BEDROCK_MODEL_ID = os.environ.get("BEDROCK_MODEL_ID")
+PREFERRED_BEDROCK_MODELS = [
+    "anthropic.claude-3-5-sonnet",
+    "anthropic.claude-3-5-haiku",
+    "anthropic.claude-3-haiku",
+    "mistral.mistral-large-2402",
+    "amazon.nova-pro-v1",
+    "amazon.titan-text-premier-v1",
+]
 AUTHOR = "Jainam Mehta"
 AUTHOR_FULL = "Jainam Paresh Mehta"
 
@@ -216,25 +230,6 @@ POST_CRITICAL_CSS = """
     }
 """
 
-PREFERRED_MODELS = [
-    "qwen2.5:14b",
-    "qwen2.5:7b",
-    "qwen2.5",
-    "qwen2",
-    "llama3.2",
-    "llama3.1",
-    "llama3",
-    "mistral",
-    "gemma2",
-    "gemma",
-    "phi3",
-    "phi",
-    "deepseek-coder-v2",
-    "deepseek-coder",
-    "codellama",
-    "mixtral",
-]
-
 TOPICS: list[dict[str, Any]] = [
     {
         "title": "Why I Prefer NestJS Over Express for Production APIs",
@@ -351,27 +346,61 @@ def escape_attr(value: str) -> str:
     return html.escape(strip_tags(value), quote=True)
 
 
-def get_ollama_model() -> str | None:
+def import_boto3() -> Any:
     try:
-        response = requests.get(f"{OLLAMA_BASE}/api/tags", timeout=8)
-        response.raise_for_status()
+        import boto3
+    except ImportError as exc:
+        print("boto3 not installed; attempting to bootstrap pip and install it...")
+        try:
+            import pip  # type: ignore
+        except ImportError:
+            try:
+                import ensurepip
+                ensurepip.bootstrap(upgrade=True)
+            except Exception:
+                raise RuntimeError(
+                    "Missing dependency: boto3 is required to use AWS Bedrock. "
+                    "Automatic pip bootstrap failed. Install boto3 manually with 'python -m pip install boto3' "
+                    "or use a Python environment where boto3 is already installed."
+                ) from exc
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "boto3"])
+            import boto3
+        except subprocess.CalledProcessError as install_exc:
+            raise RuntimeError(
+                "Missing dependency: boto3 is required to use AWS Bedrock. "
+                "Automatic installation failed. Install it manually with 'python -m pip install boto3' "
+                "or use a Python environment where boto3 is already installed."
+            ) from install_exc
+    return boto3
+
+
+def get_bedrock_model() -> str | None:
+    model_id = os.environ.get("BEDROCK_MODEL_ID")
+    if model_id:
+        return model_id
+
+    boto3 = import_boto3()
+    try:
+        client = boto3.client("bedrock")
+        response = client.list_foundation_models(byOutputModality="TEXT")
+        available: list[str] = [
+            m["modelId"] for m in response.get("modelSummaries", []) if m.get("modelId")
+        ]
     except Exception as exc:
-        print(f"Ollama is not reachable at {OLLAMA_BASE}: {exc}")
+        print(f"Bedrock model lookup failed: {exc}")
         return None
 
-    models = response.json().get("models", [])
-    available = [model.get("name", "") for model in models if model.get("name")]
-    available_names = [name.split(":", 1)[0] for name in available]
-
-    for preferred in PREFERRED_MODELS:
-        for original, plain in zip(available, available_names):
-            if preferred == original or preferred == plain or preferred in plain:
-                return original
+    print(f"Available Bedrock models: {available}")
+    for preferred in PREFERRED_BEDROCK_MODELS:
+        match = next((m for m in available if m.startswith(preferred)), None)
+        if match:
+            return match
 
     return available[0] if available else None
 
 
-def generate_with_ollama(model: str, topic: dict[str, Any], date_str: str) -> str:
+def generate_with_bedrock(model_id: str, topic: dict[str, Any], date_str: str) -> str:
     system_prompt = (
         "You are Jainam Mehta, a senior Indian backend engineer with 8+ years of production experience. "
         "Write like a real engineer, not like AI content. Keep it human sounding, conversational, and practical. "
@@ -398,47 +427,30 @@ def generate_with_ollama(model: str, topic: dict[str, Any], date_str: str) -> st
         "Add at least one small Node.js code example and one Redis or system design example. "
         "Keep paragraphs short and avoid overly polished English."
     )
-    payload = {
-        "model": model,
-        "system": system_prompt,
-        "prompt": user_prompt,
-        "stream": True,
-        "options": {
-            "temperature": 0.68,
-            "top_p": 0.9,
-            "num_predict": 2600,
-        },
-    }
-    print(f"Generating post with Ollama model: {model}")
-    chunks: list[str] = []
-    timeout = (OLLAMA_CONNECT_TIMEOUT_SECONDS, OLLAMA_READ_TIMEOUT_SECONDS)
-    try:
-        with requests.post(f"{OLLAMA_BASE}/api/generate", json=payload, stream=True, timeout=timeout) as response:
-            response.raise_for_status()
-            for line in response.iter_lines(decode_unicode=True):
-                if not line:
-                    continue
-                data = json.loads(line)
-                chunks.append(data.get("response", ""))
-                if data.get("done"):
-                    break
-    except requests.exceptions.ReadTimeout as exc:
-        partial_content = "".join(chunks).strip()
-        if len(partial_content) >= 400:
-            print(
-                "WARNING: Ollama timed out after receiving enough content. "
-                "Publishing the partial generated post."
-            )
-            return partial_content
-        raise RuntimeError(
-            "Ollama took too long to respond. "
-            f"The current read timeout is {OLLAMA_READ_TIMEOUT_SECONDS}s. "
-            "Try rerunning, use a smaller model, or increase OLLAMA_READ_TIMEOUT_SECONDS."
-        ) from exc
-    except requests.exceptions.RequestException as exc:
-        raise RuntimeError(f"Ollama generation failed: {exc}") from exc
+    print(f"Generating post with Bedrock model: {model_id}")
 
-    return "".join(chunks).strip()
+    boto3 = import_boto3()
+    try:
+        client = boto3.client("bedrock-runtime")
+        response = client.converse(
+            modelId=model_id,
+            system=[{"text": system_prompt}],
+            messages=[{"role": "user", "content": [{"text": user_prompt}]}],
+            inferenceConfig={
+                "temperature": 0.68,
+                "topP": 0.9,
+                "maxTokens": 2600,
+            },
+        )
+    except Exception as exc:
+        raise RuntimeError(f"Bedrock generation failed: {exc}") from exc
+
+    try:
+        generated = response["output"]["message"]["content"][0]["text"]
+    except (KeyError, IndexError) as exc:
+        raise RuntimeError(f"Bedrock returned unexpected response structure: {response}") from exc
+
+    return generated.strip()
 
 
 def markdown_to_html(markdown: str) -> str:
@@ -799,14 +811,17 @@ def main() -> None:
         publish_to_git(date_str, slug)
         return
 
-    model = get_ollama_model()
+    model = get_bedrock_model()
     if not model:
-        print("ERROR: Start Ollama first, then rerun: python generate_blog.py")
+        print(
+            "ERROR: Could not find an AWS Bedrock model. "
+            "Set BEDROCK_MODEL_ID or ensure your AWS Bedrock configuration is correct."
+        )
         sys.exit(1)
 
-    raw_content = generate_with_ollama(model, topic, date_str)
+    raw_content = generate_with_bedrock(model, topic, date_str)
     if len(raw_content) < 400:
-        print("ERROR: Ollama returned content that is too short. Please rerun.")
+        print("ERROR: Bedrock returned content that is too short. Please rerun.")
         sys.exit(1)
 
     POSTS_DIR.mkdir(parents=True, exist_ok=True)
