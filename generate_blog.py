@@ -53,12 +53,13 @@ POSTS_DIR = BLOG_DIR / "posts"
 SITE_URL = "https://jainammehta.in"
 BEDROCK_MODEL_ID = os.environ.get("BEDROCK_MODEL_ID")
 PREFERRED_BEDROCK_MODELS = [
-    "anthropic.claude-3-5-sonnet",
-    "anthropic.claude-3-5-haiku",
-    "anthropic.claude-3-haiku",
-    "mistral.mistral-large-2402",
-    "amazon.nova-pro-v1",
-    "amazon.titan-text-premier-v1",
+    "anthropic.claude-3-haiku-20240307-v1:0",  # Supports on-demand
+    "anthropic.claude-3-sonnet-20240229-v1:0",  # Supports on-demand
+    "meta.llama3-70b-instruct-v1:0",
+    "meta.llama3-8b-instruct-v1:0",
+    "mistral.mistral-large-2402-v1:0",
+    "cohere.command-r-plus-v1:0",
+    "amazon.nova-pro-v1:0",
 ]
 AUTHOR = "Jainam Mehta"
 AUTHOR_FULL = "Jainam Paresh Mehta"
