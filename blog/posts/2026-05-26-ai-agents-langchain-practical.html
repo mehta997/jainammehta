@@ -18,13 +18,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
   <title>Building AI Agents with LangChain: A Practical Guide | Jainam Mehta</title>
-  <meta name="description" content="# Building AI Agents with LangChain: A Practical Guide" />
+  <meta name="description" content="Hey folks, let&#x27;s dive into building AI agents using LangChain. In today&#x27;s world, AI agents are not just buzzwords. They&#x27;re becoming real, practical solutions fo" />
   <meta name="keywords" content="AI agents LangChain, autonomous agents, tool calling, LLM agents, agent workflow, Jainam Mehta blog" />
   <meta name="author" content="Jainam Paresh Mehta" />
 
   <meta property="og:type" content="article" />
   <meta property="og:title" content="Building AI Agents with LangChain: A Practical Guide | Jainam Mehta" />
-  <meta property="og:description" content="# Building AI Agents with LangChain: A Practical Guide" />
+  <meta property="og:description" content="Hey folks, let&#x27;s dive into building AI agents using LangChain. In today&#x27;s world, AI agents are not just buzzwords. They&#x27;re becoming real, practical solutions fo" />
   <meta property="og:url" content="https://jainammehta.in/blog/posts/2026-05-26-ai-agents-langchain-practical.html" />
   <meta property="og:image" content="https://jainammehta.in/assets/1738839200854.jpeg" />
   <meta property="article:author" content="Jainam Paresh Mehta" />
@@ -32,7 +32,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Building AI Agents with LangChain: A Practical Guide" />
-  <meta name="twitter:description" content="# Building AI Agents with LangChain: A Practical Guide" />
+  <meta name="twitter:description" content="Hey folks, let&#x27;s dive into building AI agents using LangChain. In today&#x27;s world, AI agents are not just buzzwords. They&#x27;re becoming real, practical solutions fo" />
   <meta name="twitter:image" content="https://jainammehta.in/assets/1738839200854.jpeg" />
 
   <link rel="canonical" href="https://jainammehta.in/blog/posts/2026-05-26-ai-agents-langchain-practical.html" />
@@ -203,7 +203,7 @@
       }
     }
 </style>
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Building AI Agents with LangChain: A Practical Guide", "url": "https://jainammehta.in/blog/posts/2026-05-26-ai-agents-langchain-practical.html", "datePublished": "2026-05-26", "dateModified": "2026-05-26", "author": {"@type": "Person", "name": "Jainam Paresh Mehta", "url": "https://jainammehta.in/"}, "publisher": {"@type": "Person", "name": "Jainam Paresh Mehta"}, "description": "# Building AI Agents with LangChain: A Practical Guide", "keywords": "AI agents LangChain, autonomous agents, tool calling, LLM agents, agent workflow", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://jainammehta.in/blog/posts/2026-05-26-ai-agents-langchain-practical.html"}, "image": "https://jainammehta.in/assets/1738839200854.jpeg"}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BlogPosting", "headline": "Building AI Agents with LangChain: A Practical Guide", "url": "https://jainammehta.in/blog/posts/2026-05-26-ai-agents-langchain-practical.html", "datePublished": "2026-05-26", "dateModified": "2026-05-26", "author": {"@type": "Person", "name": "Jainam Paresh Mehta", "url": "https://jainammehta.in/"}, "publisher": {"@type": "Person", "name": "Jainam Paresh Mehta"}, "description": "Hey folks, let's dive into building AI agents using LangChain. In today's world, AI agents are not just buzzwords. They're becoming real, practical solutions fo", "keywords": "AI agents LangChain, autonomous agents, tool calling, LLM agents, agent workflow", "mainEntityOfPage": {"@type": "WebPage", "@id": "https://jainammehta.in/blog/posts/2026-05-26-ai-agents-langchain-practical.html"}, "image": "https://jainammehta.in/assets/1738839200854.jpeg"}</script>
 </head>
 <body>
   <header>
@@ -234,129 +234,111 @@
     </header>
 
     <div class="post-body" itemprop="articleBody">
-<p># Building AI Agents with LangChain: A Practical Guide</p>
-<p>Hello fellow engineers! Today, we&#x27;re diving into building AI agents using LangChain. This isn&#x27;t just about theory; we&#x27;ll get hands-on with practical examples and real-world scenarios.</p>
-<h2>Introduction to AI Agents</h2>
-<p>AI agents are becoming increasingly vital in modern applications. They can automate tasks, make decisions, and interact with users in meaningful ways. LangChain is a powerful tool to build these agents, offering a flexible and modular approach.</p>
-<h2>Tools and Libraries</h2>
-<p>LangChain provides various tools to build robust AI agents. Here are some key components:</p>
-<ul><li><strong>LLMs (Large Language Models):</strong> The backbone of our agents.</li><li><strong>Memory:</strong> Helps agents remember past interactions.</li><li><strong>ReAct Loops:</strong> Reasoning, Acting, and Feedback loops.</li><li><strong>Tool Calling:</strong> Allows agents to call external APIs.</li></ul>
-<h2>Memory in AI Agents</h2>
-<p>Memory is crucial for agents to maintain context over time. Imagine a chatbot that can remember previous conversations to provide personalized responses. Here&#x27;s a simple Node.js example using LangChain&#x27;s memory feature:</p>
-<pre><code class="language-javascript">const { LangChain } = require(&#x27;langchain&#x27;);
+<p>Hey folks, let&#x27;s dive into building AI agents using LangChain. In today&#x27;s world, AI agents are not just buzzwords. They&#x27;re becoming real, practical solutions for automating complex tasks. Let&#x27;s break down how to build these agents step by step.</p>
+<h3>What are AI Agents?</h3>
+<p>AI agents are software programs that can perform tasks autonomously. Think of them as digital workers that can follow instructions, make decisions, and even learn from their actions. With LangChain, building these agents becomes a lot easier.</p>
+<h3>Why LangChain?</h3>
+<p>LangChain is a powerful framework for creating AI agents. It provides tools for:</p>
+<ul><li>Managing agent workflows</li><li>Integrating with large language models (LLMs)</li><li>Handling memory and context</li><li>Executing tool calls</li></ul>
+<h3>Tools and External APIs</h3>
+<p>One of the key aspects of building AI agents is integrating them with external tools and APIs. For example, if your agent needs to fetch data from a database or send an email, it needs to call these tools.</p>
+<p>Here&#x27;s a simple Node.js example of how you might set up a tool for fetching user data from a database:</p>
+<pre><code class="language-javascript">const { Tool } = require(&#x27;langchain/tools&#x27;);
 
-const chain = new LangChain();
-
-const memory = chain.memory();
-
-memory.remember(&#x27;user&#x27;, &#x27;Hello, how can I help you today?&#x27;);
-
-const response = memory.recall(&#x27;user&#x27;);
-console.log(response);  // Output: Hello, how can I help you today?</code></pre>
-<p>This example shows how easy it is to implement memory in LangChain.</p>
-<h2>ReAct Loops</h2>
-<p>ReAct loops involve reasoning, acting, and feedback. This cycle ensures that agents can make informed decisions based on past actions.</p>
-<h3>Reasoning</h3>
-<p>Reasoning involves analyzing input data to understand the context. For example, if a user asks for the weather, the agent needs to understand the location.</p>
-<h3>Acting</h3>
-<p>Once the context is understood, the agent can act. This might involve calling an external API to fetch weather data.</p>
-<h3>Feedback</h3>
-<p>Finally, the agent should provide feedback to the user. This completes the loop and ensures the agent can learn from past interactions.</p>
-<h2>Tool Calling</h2>
-<p>Tool calling allows agents to interact with external services. For instance, if an agent needs to fetch stock prices, it can call a financial API.</p>
-<p>Here’s a simple example of tool calling in Node.js:</p>
-<pre><code class="language-javascript">const { LangChain } = require(&#x27;langchain&#x27;);
-
-const chain = new LangChain();
-
-chain.tool(&#x27;getStockPrice&#x27;, async (symbol) =&gt; {
-  const response = await fetch(`https://api.example.com/stock/${symbol}`);
-  return response.json();
-});
-
-const result = await chain.execute(&#x27;getStockPrice&#x27;, &#x27;AAPL&#x27;);
-console.log(result);</code></pre>
-<p>This example demonstrates how an agent can call an external tool to get stock prices.</p>
-<h2>Failure Handling</h2>
-<p>In production, failure handling is critical. Agents should gracefully handle errors and provide meaningful feedback to users.</p>
-<h3>Example Scenario</h3>
-<p>Imagine an agent fails to fetch stock prices due to an API outage. Instead of crashing, the agent should:</p>
-<p>1. Log the error for monitoring. 2. Provide a fallback response to the user.</p>
-<p>Here’s how you might implement this in Node.js:</p>
-<pre><code class="language-javascript">const { LangChain } = require(&#x27;langchain&#x27;);
-
-const chain = new LangChain();
-
-chain.tool(&#x27;getStockPrice&#x27;, async (symbol) =&gt; {
-  try {
-    const response = await fetch(`https://api.example.com/stock/${symbol}`);
-    return response.json();
-  } catch (error) {
-    console.error(&#x27;Failed to fetch stock price:&#x27;, error);
-    return { error: &#x27;Unable to fetch stock price at the moment.&#x27; };
+class UserDataFetcher extends Tool {
+  async run(input) {
+    const userId = input.userId;
+    const user = await this.fetchUserDataFromDB(userId);
+    return user;
   }
-});
 
-const result = await chain.execute(&#x27;getStockPrice&#x27;, &#x27;AAPL&#x27;);
-console.log(result);</code></pre>
-<p>This example ensures that the agent handles failures gracefully.</p>
-<h2>Human Approval Points</h2>
-<p>In some scenarios, human intervention is necessary. For instance, if an agent needs to make a high-value transaction, it should seek approval from a human.</p>
-<h3>Example Scenario</h3>
-<p>Imagine an e-commerce agent that needs to process a refund. It should:</p>
-<p>1. Log the request. 2. Notify a human for approval.</p>
-<p>Here’s how you might implement this:</p>
-<pre><code class="language-javascript">const { LangChain } = require(&#x27;langchain&#x27;);
-
-const chain = new LangChain();
-
-chain.tool(&#x27;processRefund&#x27;, async (orderId) =&gt; {
-  const request = {
-    orderId: orderId,
-    status: &#x27;pending_approval&#x27;
-  };
-
-  // Log the request
-  console.log(&#x27;Refund request logged:&#x27;, request);
-
-  // Notify human for approval
-  await notifyHumanForApproval(request);
-
-  return { status: &#x27;awaiting_approval&#x27; };
-});
-
-async function notifyHumanForApproval(request) {
-  // Simulate notification logic
-  console.log(&#x27;Notification sent to human for approval:&#x27;, request);
+  async fetchUserDataFromDB(userId) {
+    // Simulate a database call
+    return { id: userId, name: &#x27;Jainam Mehta&#x27;, email: &#x27;jainam@example.com&#x27; };
+  }
 }
 
-const result = await chain.execute(&#x27;processRefund&#x27;, &#x27;12345&#x27;);
-console.log(result);</code></pre>
-<p>This example shows how to incorporate human approval points in agent workflows.</p>
-<h2>Production Observability</h2>
-<p>Observability is key to maintaining healthy production systems. Monitoring agent performance, logging errors, and tracking user interactions are essential.</p>
-<h3>Example Scenario</h3>
-<p>Imagine deploying an AI agent in a customer support system. You should:</p>
-<p>1. Monitor agent performance metrics. 2. Log all interactions for analysis. 3. Set up alerts for unusual activities.</p>
-<h3>Using Redis for Observability</h3>
-<p>Redis can be a powerful tool for observability. Here’s an example of using Redis to store agent logs:</p>
+const userDataFetcher = new UserDataFetcher();</code></pre>
+<p>In this example, <code>UserDataFetcher</code> is a tool that fetches user data based on a user ID. Your agent can call this tool when it needs user information.</p>
+<h3>Memory and Context</h3>
+<p>AI agents need to remember past interactions to make informed decisions. LangChain provides memory mechanisms to help with this.</p>
+<p>For example, you can use Redis to store the agent&#x27;s memory:</p>
 <pre><code class="language-javascript">const redis = require(&#x27;redis&#x27;);
 const client = redis.createClient();
 
-client.on(&#x27;connect&#x27;, () =&gt; {
-  console.log(&#x27;Connected to Redis...&#x27;);
-});
-
-async function logInteraction(agentId, interaction) {
-  await client.lpush(`agent:${agentId}:logs`, JSON.stringify(interaction));
+async function saveAgentMemory(agentId, memory) {
+  await client.setex(agentId, 3600, JSON.stringify(memory));
 }
 
-// Usage example
-await logInteraction(&#x27;agent1&#x27;, { timestamp: new Date(), event: &#x27;user_query&#x27;, data: { query: &#x27;How can I reset my password?&#x27; } });</code></pre>
-<p>This example demonstrates how Redis can be used to store and analyze agent interactions.</p>
-<h2>My Practical Takeaway</h2>
-<p>Building AI agents with LangChain involves several key components: memory, ReAct loops, tool calling, failure handling, human approval points, and observability. By incorporating these elements, we can create robust, efficient, and user-friendly agents.</p>
-<p>Remember, the goal is to build systems that not only perform well but also provide a seamless experience for users. With tools like LangChain, Redis, and Node.js, we have the right building blocks to achieve this.</p>
+async function getAgentMemory(agentId) {
+  const memory = await client.get(agentId);
+  return JSON.parse(memory);
+}</code></pre>
+<p>Here, we&#x27;re using Redis to store and retrieve the agent&#x27;s memory. This allows the agent to remember past actions and decisions.</p>
+<h3>ReAct Loops</h3>
+<p>ReAct (Reason, Act) loops are a fundamental concept in building AI agents. The agent reasons about what action to take, then acts on that decision.</p>
+<p>Here&#x27;s a simple ReAct loop in Node.js:</p>
+<pre><code class="language-javascript">async function agentLoop(agent) {
+  while (true) {
+    const observation = await agent.observe();
+    const action = await agent.decide(observation);
+    await agent.act(action);
+    await new Promise(resolve =&gt; setTimeout(resolve, 1000)); // Simulate delay
+  }
+}</code></pre>
+<p>In this loop, the agent observes its environment, decides on an action, and then acts. This loop continues indefinitely, allowing the agent to perform tasks autonomously.</p>
+<h3>Failure Handling</h3>
+<p>No system is perfect, and AI agents are no exception. You need to handle failures gracefully.</p>
+<p>One common failure is when a tool call fails. Here&#x27;s how you might handle that:</p>
+<pre><code class="language-javascript">async function callToolWithRetry(tool, input, retries = 3) {
+  for (let i = 0; i &lt; retries; i++) {
+    try {
+      return await tool.run(input);
+    } catch (error) {
+      if (i === retries - 1) {
+        throw error;
+      }
+      await new Promise(resolve =&gt; setTimeout(resolve, 1000)); // Wait before retrying
+    }
+  }
+}</code></pre>
+<p>In this example, if a tool call fails, the agent retries up to three times before giving up. This helps ensure that transient errors don&#x27;t bring down the entire agent.</p>
+<h3>Human Approval Points</h3>
+<p>Sometimes, you need human intervention in the agent&#x27;s workflow. For example, if the agent is about to perform a critical action, you might want a human to approve it first.</p>
+<p>Here&#x27;s a simple example of adding a human approval step:</p>
+<pre><code class="language-javascript">async function requireHumanApproval(action) {
+  const approval = await waitForHumanApproval(action);
+  if (!approval) {
+    throw new Error(&#x27;Action rejected by human&#x27;);
+  }
+}
+
+async function waitForHumanApproval(action) {
+  // Simulate human approval process
+  return new Promise(resolve =&gt; {
+    setTimeout(() =&gt; resolve(true), 5000); // Simulate 5-second approval time
+  });
+}</code></pre>
+<p>In this example, the agent waits for human approval before proceeding with a critical action. This adds an extra layer of safety to the agent&#x27;s workflow.</p>
+<h3>Production Observability</h3>
+<p>When running AI agents in production, observability is crucial. You need to monitor the agent&#x27;s actions, decisions, and failures.</p>
+<p>One way to do this is by logging all actions and decisions to a centralized logging system like Elasticsearch:</p>
+<pre><code class="language-javascript">const { Client } = require(&#x27;@elastic/elasticsearch&#x27;);
+const client = new Client({ node: &#x27;http://localhost:9200&#x27; });
+
+async function logAction(agentId, action) {
+  await client.index({
+    index: &#x27;agent_logs&#x27;,
+    body: {
+      agent_id: agentId,
+      action: action,
+      timestamp: new Date()
+    }
+  });
+}</code></pre>
+<p>In this example, every action taken by the agent is logged to Elasticsearch. This allows you to search and analyze the logs later.</p>
+<h3>My Practical Takeaway</h3>
+<p>Building AI agents with LangChain is a practical way to automate complex tasks. By integrating tools, managing memory, handling failures, and adding human approval points, you can create robust and reliable agents. Remember to focus on observability to ensure your agents run smoothly in production.</p>
 <p>Happy coding!</p>
     </div>
 
