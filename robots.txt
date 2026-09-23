@@ -2,24 +2,27 @@ User-agent: *
 Allow: /
 Sitemap: https://jainammehta.in/sitemap.xml
 
-# Allow all major crawlers explicitly
 User-agent: Googlebot
 Allow: /
 User-agent: Googlebot-Image
 Allow: /assets/
-
 User-agent: Bingbot
 Allow: /
-
 User-agent: LinkedInBot
 Allow: /
-
 User-agent: Twitterbot
 Allow: /
 
-# Block non-existent paths to preserve crawl budget
 User-agent: *
 Disallow: /wp-admin/
 Disallow: /wp-content/
 Disallow: /cgi-bin/
 Disallow: /.git/
+
+# Deception paths: legitimate crawlers should stay away.
+# Requests here are useful bot-behavior signals.
+Disallow: /robots-trap/
+Disallow: /internal/
+Disallow: /admin/debug.json
+Disallow: /api/internal.json
+Disallow: /backup/database-export.json
