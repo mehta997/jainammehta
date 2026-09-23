@@ -471,6 +471,28 @@ details p {
   line-height: 1.85;
 }
 
+.article-figure {
+  margin: 28px 0 34px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.article-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.article-figure figcaption {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 12px 4px 2px;
+}
+
 .post-body h2 {
   color: var(--accent);
   font-size: 22px;
