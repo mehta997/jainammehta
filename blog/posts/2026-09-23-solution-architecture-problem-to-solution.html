@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>From Problem to Solution: How I Approach Solution Architecture | Jainam Mehta</title>
+<meta name="description" content="A practical approach to turning ambiguous business requirements into clear architecture, boundaries, APIs, data flows, trade-offs, and an executable delivery plan.">
+<meta name="author" content="Jainam Mehta">
+<meta property="og:type" content="article"><meta property="og:title" content="From Problem to Solution: How I Approach Solution Architecture | Jainam Mehta"><meta property="og:description" content="A practical approach to turning ambiguous business requirements into clear architecture, boundaries, APIs, data flows, trade-offs, and an executable delivery plan."><meta property="og:url" content="https://jainammehta.in/blog/posts/2026-09-23-solution-architecture-problem-to-solution.html">
+<link rel="canonical" href="https://jainammehta.in/blog/posts/2026-09-23-solution-architecture-problem-to-solution.html">
+<link rel="stylesheet" href="/assets/style.css">
+</head><body>
+<header><nav><div class="nav-inner"><a href="/" class="logo">Jainam Mehta</a><div class="links"><a href="/">Home</a><a href="/#services">Services</a><a href="/#projects">Work</a><a href="/blog/" class="accent">Blog</a><a href="/#contact" class="btn">Contact</a></div></div></nav></header>
+<article class="post-wrap" itemscope itemtype="https://schema.org/BlogPosting">
+<a href="/blog/" class="back-link">Back to Blog</a>
+<header class="post-header"><div class="post-tags"><span class="tag">Architecture</span><span class="tag">System Design</span><span class="tag">Technical Strategy</span></div><h1 itemprop="headline">From Problem to Solution: How I Approach Solution Architecture</h1><div class="post-meta"><span>By <strong>Jainam Mehta</strong></span><span>September 23, 2026</span><span>5 min read</span></div></header>
+<div class="post-body" itemprop="articleBody"><p>Good architecture starts before choosing a framework, database, or cloud service. It starts by understanding the problem we are actually trying to solve.</p>
+<h2>Start With the Problem, Not the Technology</h2>
+<p>When a requirement arrives, I first try to understand the users, business workflow, constraints, expected outcome, and what success looks like. This prevents a common mistake: designing an impressive technical system that solves the wrong problem.</p>
+<h2>Turn Requirements Into System Boundaries</h2>
+<p>Once the problem is clear, I break the system into responsibilities. I look at domains, services, APIs, data ownership, asynchronous workflows, external integrations, and the places where failures can happen.</p>
+<h2>Choose Technology Based on Constraints</h2>
+<p>Technology choices should follow the problem. Node.js, NestJS, PostgreSQL, Redis, queues, serverless components, or AI services can all be useful, but the choice depends on scale, team capability, operational requirements, latency, cost, and expected change.</p>
+<h2>Design the Orchestration</h2>
+<p>Modern systems rarely work as one application. A request may move through an API, service, queue, worker, database, third-party provider, and notification system. The architecture should make those interactions explicit and define retries, idempotency, timeouts, observability, and failure handling.</p>
+<h2>Architecture Is Also a Delivery Plan</h2>
+<p>A diagram alone is not enough. I prefer an architecture that can be broken into milestones: foundations first, critical business flows next, integrations after that, and optimization once production behaviour is measurable.</p>
+<h2>My Practical Takeaway</h2>
+<p>The goal of architecture is not complexity. It is clarity. Start from the business problem, define boundaries, make trade-offs explicit, design reliable orchestration, and create a path that an engineering team can actually deliver.</p></div>
+<footer class="post-footer"><p>Written by <a href="/">Jainam Mehta</a>, Senior Software Engineer working with AI systems, backend architecture, ecommerce platforms, and modern web applications.</p></footer>
+</article></body></html>
