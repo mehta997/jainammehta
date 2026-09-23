@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MCP Servers Explained: Connecting AI Agents to Real Systems | Jainam Mehta</title>
+<meta name="description" content="A practical introduction to Model Context Protocol (MCP) servers: tools, resources, prompts, architecture, permissions, and a simple TypeScript example.">
+<meta name="author" content="Jainam Mehta">
+<meta property="og:type" content="article"><meta property="og:title" content="MCP Servers Explained: Connecting AI Agents to Real Systems | Jainam Mehta"><meta property="og:description" content="Learn how MCP servers expose tools, resources, and prompts to AI applications, with a simple TypeScript example and production design considerations."><meta property="og:url" content="https://jainammehta.in/blog/posts/2026-09-23-mcp-servers-ai-integrations.html">
+<link rel="canonical" href="https://jainammehta.in/blog/posts/2026-09-23-mcp-servers-ai-integrations.html">
+<link rel="stylesheet" href="/assets/style.css">
+</head><body>
+<header><nav><div class="nav-inner"><a href="/" class="logo">Jainam Mehta</a><div class="links"><a href="/">Home</a><a href="/#services">Services</a><a href="/#projects">Work</a><a href="/blog/" class="accent">Blog</a><a href="/#contact" class="btn">Contact</a></div></div></nav></header>
+<article class="post-wrap" itemscope itemtype="https://schema.org/BlogPosting">
+<a href="/blog/" class="back-link">Back to Blog</a>
+<header class="post-header"><div class="post-tags"><span class="tag">MCP</span><span class="tag">AI Agents</span><span class="tag">Integration</span></div><h1 itemprop="headline">MCP Servers Explained: Connecting AI Agents to Real Systems</h1><div class="post-meta"><span>By <strong>Jainam Mehta</strong></span><span>September 23, 2026</span><span>6 min read</span></div></header>
+<div class="post-body" itemprop="articleBody">
+<figure class="article-figure"><img src="/assets/blog/mcp-architecture.svg" alt="MCP architecture connecting an AI host to tools and business systems" loading="lazy"><figcaption>MCP gives AI applications a standardized way to discover and use capabilities exposed by servers.</figcaption></figure>
+<p>If an AI assistant needs to work with your company's systems, the interesting question is not only “Which model should I use?” It is also “How does the model safely access the tools and context it needs?”</p>
+<p>Model Context Protocol (MCP) provides a standard way for AI applications to connect with external capabilities. MCP servers can expose <strong>tools, resources, and prompts</strong>, giving clients a structured interface to systems and data. <a href="https://modelcontextprotocol.io/specification/draft/server/index">MCP server primitives</a></p>
+
+<h2>Think of MCP as a Contract</h2>
+<p>Imagine an internal order platform. Instead of building a separate integration for every AI client, you can expose focused capabilities through an MCP server:</p>
+<pre><code>get_order(orderId)
+search_orders(customerId)
+create_support_ticket(orderId, message)</code></pre>
+<p>The AI application can discover those capabilities and decide when to use them, while the server remains responsible for implementing the actual business integration.</p>
+
+<h2>Tools, Resources, and Prompts</h2>
+<ul><li><strong>Tools</strong> perform actions or retrieve information.</li><li><strong>Resources</strong> provide structured context such as documents or other data.</li><li><strong>Prompts</strong> provide reusable interaction templates.</li></ul>
+<p>This separation is useful because each capability has a clearer purpose and boundary.</p>
+
+<h2>A Small TypeScript Example</h2>
+<p>The current MCP TypeScript SDK provides server APIs for exposing tools, resources, and prompts. A minimal tool can look conceptually like this:</p>
+<pre><code>server.registerTool(
+  "get_order",
+  {
+    description: "Get an order by ID",
+    inputSchema: {
+      type: "object",
+      properties: { orderId: { type: "string" } },
+      required: ["orderId"]
+    }
+  },
+  async ({ orderId }) => {
+    return { content: await orders.get(orderId) };
+  }
+);</code></pre>
+<p>The exact SDK APIs can change with protocol versions, so I treat the protocol specification and SDK documentation as the source of truth when implementing a production server.</p>
+
+<h2>Where Governance Fits</h2>
+<p>MCP does not mean “give the model unrestricted access.” A production MCP server still needs authentication, authorization, input validation, rate limits, audit logging, and clear tool boundaries.</p>
+<p>For example, I would treat these differently:</p>
+<pre><code>get_customer()        // read-only
+update_customer()     // write
+delete_customer()     // destructive
+issue_refund()        // high-impact</code></pre>
+<p>The server and the underlying business system should enforce those permissions rather than trusting the model to follow a prompt.</p>
+
+<h2>When MCP Is Useful</h2>
+<p>MCP becomes particularly interesting when several AI clients need access to the same capabilities. Instead of maintaining many custom adapters, you can expose a focused server interface and keep the integration logic behind it.</p>
+
+<h2>My Practical Takeaway</h2>
+<p>I see MCP as an integration boundary for agentic systems: the AI decides what capability it needs, while the server defines what is available and how that capability is executed.</p>
+<p>That separation makes agent systems easier to integrate, test, govern, and evolve — especially when the tools represent real business operations.</p>
+</div>
+<footer class="post-footer"><p>Written by <a href="/">Jainam Mehta</a>, Senior Software Engineer working with AI systems, backend architecture, ecommerce platforms, and modern web applications.</p></footer>
+</article></body></html>
