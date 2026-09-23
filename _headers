@@ -1,0 +1,36 @@
+/backup/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/config/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/admin/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/api/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/data/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/downloads/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/private/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/internal/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/old/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/tmp/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/storage/*
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
+/public/data.json
+  X-Robots-Tag: noindex, nofollow, nosnippet
+  X-Content-Type-Options: nosniff
