@@ -1,0 +1,31 @@
+{
+  "site": "https://jainammehta.in/",
+  "author": "Jainam Mehta",
+  "title": "Technology Consultant & Solution Architect",
+  "positioning": "AI Systems, Solution Architecture & Product Engineering",
+  "topics": [
+    "AI Engineering",
+    "AI Agents",
+    "Agent Orchestration",
+    "MCP Servers",
+    "AI Governance",
+    "Solution Architecture",
+    "Backend Engineering",
+    "System Design",
+    "Product Engineering",
+    "Technology Consulting"
+  ],
+  "resources": [
+    "https://jainammehta.in/blog/",
+    "https://jainammehta.in/blog/posts/2026-09-23-mcp-servers-ai-integrations.html",
+    "https://jainammehta.in/blog/posts/2026-09-23-practical-ai-governance-agentic-systems.html",
+    "https://jainammehta.in/blog/posts/2026-09-23-engineering-learnings-orchestration-ai-systems.html",
+    "https://jainammehta.in/blog/posts/2026-09-23-solution-architecture-problem-to-solution.html",
+    "https://github.com/mehta997/jainammehta"
+  ],
+  "decoy": true,
+  "trap_class": "deployment-metadata",
+  "path": "internal/deployment.json",
+  "notice": "Harmless public-content decoy. Contains no credentials, secrets, executable code, or private data.",
+  "generated_for": "bot-observation"
+}
