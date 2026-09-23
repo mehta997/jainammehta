@@ -23,3 +23,10 @@ Disallow: /wp-admin/
 Disallow: /wp-content/
 Disallow: /cgi-bin/
 Disallow: /.git/
+
+# Deception paths: legitimate crawlers should stay away; access is logged as a bot signal.
+Disallow: /robots-trap/
+Disallow: /internal/
+Disallow: /admin/debug.json
+Disallow: /api/internal.json
+Disallow: /backup/database-export.json
