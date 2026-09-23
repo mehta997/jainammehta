@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>What I’m Learning About Orchestration in Modern AI Systems | Jainam Mehta</title>
+<meta name="description" content="Lessons from building AI-enabled systems: orchestration, tool boundaries, state, retries, observability, and why reliable workflows matter more than a clever prompt.">
+<meta name="author" content="Jainam Mehta">
+<meta property="og:type" content="article"><meta property="og:title" content="What I’m Learning About Orchestration in Modern AI Systems | Jainam Mehta"><meta property="og:description" content="Lessons from building AI-enabled systems: orchestration, tool boundaries, state, retries, observability, and why reliable workflows matter more than a clever prompt."><meta property="og:url" content="https://jainammehta.in/blog/posts/2026-09-23-engineering-learnings-orchestration-ai-systems.html">
+<link rel="canonical" href="https://jainammehta.in/blog/posts/2026-09-23-engineering-learnings-orchestration-ai-systems.html">
+<link rel="stylesheet" href="/assets/style.css">
+</head><body>
+<header><nav><div class="nav-inner"><a href="/" class="logo">Jainam Mehta</a><div class="links"><a href="/">Home</a><a href="/#services">Services</a><a href="/#projects">Work</a><a href="/blog/" class="accent">Blog</a><a href="/#contact" class="btn">Contact</a></div></div></nav></header>
+<article class="post-wrap" itemscope itemtype="https://schema.org/BlogPosting">
+<a href="/blog/" class="back-link">Back to Blog</a>
+<header class="post-header"><div class="post-tags"><span class="tag">AI Engineering</span><span class="tag">Orchestration</span><span class="tag">Backend</span></div><h1 itemprop="headline">What I’m Learning About Orchestration in Modern AI Systems</h1><div class="post-meta"><span>By <strong>Jainam Mehta</strong></span><span>September 23, 2026</span><span>5 min read</span></div></header>
+<div class="post-body" itemprop="articleBody"><p>One of the biggest things I am learning while working with AI systems is that the hard part is often not the model. It is everything around the model.</p>
+<h2>The Model Is One Component</h2>
+<p>An AI application usually needs more than an LLM call. It may need retrieval, tools, permissions, APIs, databases, queues, validation, human approval, and persistent state. The orchestration layer connects these pieces.</p>
+<h2>Tool Boundaries Matter</h2>
+<p>Giving an agent access to every internal operation creates a difficult system to reason about. Clear tools with narrow responsibilities make the workflow easier to secure, test, observe, and evolve.</p>
+<h2>Failures Are Normal</h2>
+<p>External APIs time out. Models return unexpected output. Queues deliver messages again. Databases become slow. Production orchestration needs timeouts, retries with limits, idempotency, fallbacks, and useful logs rather than assuming every step succeeds.</p>
+<h2>State Changes the Design</h2>
+<p>Once an AI workflow spans multiple steps, state becomes important. We need to know what has already happened, what is pending, what can be safely retried, and where a human needs to take over.</p>
+<h2>Observability Is Part of the Architecture</h2>
+<p>For AI workflows, logging only the final response is not enough. Teams need visibility into tool calls, latency, failures, retrieval results, token usage, and workflow transitions while protecting sensitive data.</p>
+<h2>My Practical Takeaway</h2>
+<p>I am increasingly thinking about AI applications as distributed software systems with an intelligence component, not simply as chat interfaces. Reliable orchestration, clear boundaries, state, and observability are what make these systems usable in production.</p></div>
+<footer class="post-footer"><p>Written by <a href="/">Jainam Mehta</a>, Senior Software Engineer working with AI systems, backend architecture, ecommerce platforms, and modern web applications.</p></footer>
+</article></body></html>
